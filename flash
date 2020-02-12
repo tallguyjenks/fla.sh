@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ ! -d $HOME/.flash ];then # If Directory does NOT exist
+	echo "No '.flash/' directory, make it? y/n"
+	read RESPONSE
+		if [ "$(echo $RESPONSE | tr '[:upper:]' '[:lower:]')" = "n" ];then # Does user want the script to make the directory
+			exit # Response NO = Exit
+		elif [ "$(echo $RESPONSE | tr '[:upper:]' '[:lower:]')" = "y" ]; then # Does user want the script to make the directory
+			mkdir $HOME/.flash
+			touch $HOME/.flash/deck.csv
+			echo "Your './flash' directory has been made and your 'deck.csv' file is ready for your flashcard data"
+			exit
+		else
+			echo "invalid choice, please select either 'y' or 'n'"
+			exit
+		fi
+fi
+if [ ! -e $HOME/.flash/deck.csv ];then # If the Deck file does NOT exist in .flash/
+	echo "No 'deck.csv' in '.flash/', make it? y/n"
+	read RESPONSE
+		if [ "$(echo $RESPONSE | tr '[:upper:]' '[:lower:]')" = "n" ];then # Does user want the script to make the deck.csv file
+			exit # Response NO = Exit
+		elif [ "$(echo $RESPONSE | tr '[:upper:]' '[:lower:]')" = "y" ]; then # Does user want the script to make the deck.csv file
+			touch $HOME/.flash/deck.csv
+			echo "Your 'deck.csv' file has been made go fill it with flashcard data!"
+			exit
+		else
+			echo "invalid choice, please select either 'y' or 'n'"
+			exit
+		fi
+fi
+
+# Configuration
+FILE="$HOME/.flash/deck.csv"
+
+main(){
+	IFS=$'\t'; read -a q <<<$(shuf -n 1 "$FILE")
+	echo "===================================================="
+	echo "Category: ${q[0]}"
+	echo "Question: ${q[1]}"
+	read _
+	echo "Answer: ${q[2]}"
+	echo ''
+}
+
+while true; do
+	main
+done

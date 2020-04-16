@@ -1,50 +1,92 @@
 #!/usr/bin/env bash
+#=================#
+#
+# AUTHOR:
+#     Bryan Jenks
+#         - www.bryanjenks.xyz
+#         - https://github.com/tallguyjenks/flash.sh
+#
+# SOURCE:
+#     This file is based off of the one presented in this YouTube Video by nixcasts:
+#         - https://www.youtube.com/watch?v=lX8jqo70r1I
+#
+# PURPOSE:
+#     To have a command line flash card tool with minimal code, plain text input and output
+#
+# VISION:
+#     The goal i have for this script is a basic level emulation of ANKI to where i have a way to
+#     keep track of a score for each item in each selected deck so that it can pick from a selection
+#     of the lowest scoring items and shuf them to the user for reenforcement of active recall.
+#
+# DEPENDENCIES:
+#     fzf - https://github.com/junegunn/fzf
+#     bat - https://github.com/sharkdp/bat
+#
+#=====================================================#
+#   INITAL SETUP OF DIRECTORY AND DEFAULT DECK FILE   #
+#=====================================================#
+DIR_MADE_MSG="
+Your '~/.local/share/flash' directory has been made and
+your 'deck.csv' file is ready for you to enter your flashcard data
+"
 
-set -e
-
-if [ ! -d $HOME/.flash ];then # If Directory does NOT exist
-	echo "No '.flash/' directory, make it? y/n"
-	read RESPONSE
-		if [ "$(echo $RESPONSE | tr '[:upper:]' '[:lower:]')" = "n" ];then # Does user want the script to make the directory
-			exit # Response NO = Exit
-		elif [ "$(echo $RESPONSE | tr '[:upper:]' '[:lower:]')" = "y" ]; then # Does user want the script to make the directory
-			mkdir $HOME/.flash
-			touch $HOME/.flash/deck.csv
-			echo "Your './flash' directory has been made and your 'deck.csv' file is ready for your flashcard data"
-			exit
-		else
-			echo "invalid choice, please select either 'y' or 'n'"
-			exit
-		fi
+if [ ! -d $HOME/.local/share/flash ];then # If Directory does NOT exist
+    echo "No '.local/share/flash' directory, make it? y/n"
+    read RESPONSE
+        case "$RESPONSE" in
+            n) exit ;;
+            N) exit ;;
+            q) exit ;;
+            Q) exit ;;
+            y) mkdir $HOME/.local/share/flash && touch $HOME/.local/share/flash/deck.csv && echo "$DIR_MADE_MSG" && exit ;;
+            Y) mkdir $HOME/.local/share/flash && touch $HOME/.local/share/flash/deck.csv && echo "$DIR_MADE_MSG" && exit ;;
+            *) echo "invalid choice, please select either 'y' or 'n'" ;;
+        esac
 fi
-if [ ! -e $HOME/.flash/deck.csv ];then # If the Deck file does NOT exist in .flash/
-	echo "No 'deck.csv' in '.flash/', make it? y/n"
-	read RESPONSE
-		if [ "$(echo $RESPONSE | tr '[:upper:]' '[:lower:]')" = "n" ];then # Does user want the script to make the deck.csv file
-			exit # Response NO = Exit
-		elif [ "$(echo $RESPONSE | tr '[:upper:]' '[:lower:]')" = "y" ]; then # Does user want the script to make the deck.csv file
-			touch $HOME/.flash/deck.csv
-			echo "Your 'deck.csv' file has been made go fill it with flashcard data!"
-			exit
-		else
-			echo "invalid choice, please select either 'y' or 'n'"
-			exit
-		fi
+
+#=====================================================#
+#      SETUP VARIABLES & CONFIRM THERE ARE DECKS      #
+#=====================================================#
+PWD="$(pwd)" # Remember User's Starting Directory
+DIR="$HOME/.local/share/flash" # Where Decks Are Located
+COUNTER=0
+NO_DECKS="
+No decks were found, please make a new deck
+using ':' as a delimiter in a '.csv' file in
+the '.local/share/flash' directory.
+"
+
+cd "$DIR"
+
+if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then
+    echo "$NO_DECKS" && cd "$PWD" && exit
 fi
 
-# Configuration
-FILE="$HOME/.flash/deck.csv"
+# Show pretty FZF preview of decks using BAT
+DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
 
 main(){
-	IFS=$'\t'; read -a q <<<$(shuf -n 1 "$FILE")
-	echo "===================================================="
-	echo "Category: ${q[0]}"
-	echo "Question: ${q[1]}"
-	read _
-	echo "Answer: ${q[2]}"
-	echo ''
+    IFS=$':'; read -a q <<<$(shuf -n 1 "$DECK")
+    if [ $COUNTER -gt 0 ]; then # If not the first flash card then pause before screen clearing
+        read _
+    fi
+    clear
+    echo "===================================================="
+    echo "Card Reviewed: $COUNTER"
+    echo "Category: ${q[0]}"
+    echo "Question: ${q[1]}"
+    echo ''
+    read -sn 1 NEXT
+    if [ "$NEXT" = q ]; then
+        cd "$PWD"
+        exit
+    fi
+    echo "Answer: ${q[2]}"
+    echo ''
+    echo "===================================================="
+    COUNTER="$(($COUNTER+1))"
 }
 
 while true; do
-	main
+        main
 done

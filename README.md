@@ -2,7 +2,7 @@
 # flash.sh
 </h1>
 
-> flashcards in your terminal!
+> flashcards in your terminal! This script was inspired by a basic script i saw in a youtube video by a user named nixcasts. I Like the Anki flashcard system and so im working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
 
 ![Preview](./img/flash_preview.png)
 

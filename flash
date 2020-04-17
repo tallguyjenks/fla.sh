@@ -67,7 +67,7 @@ main(){
     fi
     clear
     echo "===================================================="
-    echo "Card Reviewed: $COUNTER"
+    echo "Cards Reviewed: $COUNTER"
     echo "Category: ${q[0]}"
     echo "Question: ${q[1]}"
     echo ''

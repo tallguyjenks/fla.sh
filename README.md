@@ -34,3 +34,5 @@ Organized like this:
 > `category:question:answer`
 
 enjoy!
+
+<p align="center"><a href="https://github.com/arcticicestudio/nord/blob/develop/LICENSE.md"><img src="https://img.shields.io/static/v1.svg?style=flat-square&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=4c566a&colorB=88c0d0"/></a></p>

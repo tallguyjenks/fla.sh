@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#=================#
+#==============================================================#
 #
 # AUTHOR:
 #     Bryan Jenks
@@ -21,32 +21,12 @@
 # DEPENDENCIES:
 #     fzf - https://github.com/junegunn/fzf
 #     bat - https://github.com/sharkdp/bat
-#
-#=====================================================#
-#   INITAL SETUP OF DIRECTORY AND DEFAULT DECK FILE   #
-#=====================================================#
+#==============================================================#
+
 DIR_MADE_MSG="
 Your '~/.local/share/flash' directory has been made and
 your 'deck.csv' file is ready for you to enter your flashcard data
 "
-
-if [ ! -d $HOME/.local/share/flash ];then # If Directory does NOT exist
-    echo "No '.local/share/flash' directory, make it? y/n"
-    read RESPONSE
-        case "$RESPONSE" in
-            n) exit ;;
-            N) exit ;;
-            q) exit ;;
-            Q) exit ;;
-            y) mkdir $HOME/.local/share/flash && touch $HOME/.local/share/flash/deck.csv && echo "$DIR_MADE_MSG" && exit ;;
-            Y) mkdir $HOME/.local/share/flash && touch $HOME/.local/share/flash/deck.csv && echo "$DIR_MADE_MSG" && exit ;;
-            *) echo "invalid choice, please select either 'y' or 'n'" ;;
-        esac
-fi
-
-#=====================================================#
-#      SETUP VARIABLES & CONFIRM THERE ARE DECKS      #
-#=====================================================#
 PWD="$(pwd)" # Remember User's Starting Directory
 DIR="$HOME/.local/share/flash" # Where Decks Are Located
 COUNTER=0
@@ -55,6 +35,21 @@ No decks were found, please make a new deck
 using ':' as a delimiter in a '.csv' file in
 the '.local/share/flash' directory.
 "
+TEMPLATE_DECK="$HOME/.local/share/flash/deck.csv"
+
+if [ ! -d $DIR ];then # If Directory does NOT exist
+    echo "No '.local/share/flash' directory, make it? y/n"
+    read RESPONSE
+        case "$RESPONSE" in
+            n) exit ;;
+            N) exit ;;
+            q) exit ;;
+            Q) exit ;;
+            y) mkdir $DIR && touch $TEMPLATE_DECK && echo "category1:question1:answer1" >> $TEMPLATE_DECK && echo "category2:question2:answer2" >> $TEMPLATE_DECK && echo "category3:question3:answer3" >> $TEMPLATE_DECK && echo "$DIR_MADE_MSG" ;;
+            Y) mkdir $DIR && touch $TEMPLATE_DECK && echo "category1:question1:answer1" >> $TEMPLATE_DECK && echo "category2:question2:answer2" >> $TEMPLATE_DECK && echo "category3:question3:answer3" >> $TEMPLATE_DECK && echo "$DIR_MADE_MSG" ;;
+            *) echo "invalid choice, please select either 'y' or 'n'" ;;
+        esac
+fi
 
 cd "$DIR"
 

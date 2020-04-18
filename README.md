@@ -33,6 +33,10 @@ Organized like this:
 
 > `category:question:answer`
 
+## Videos
+
+[Flash Cards In Your Terminal With Flash.sh](https://www.youtube.com/watch?v=KEWhOzDCfLg)
+
 enjoy!
 
 <h1 align="center">

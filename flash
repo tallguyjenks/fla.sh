@@ -22,20 +22,23 @@
 #     fzf - https://github.com/junegunn/fzf
 #     bat - https://github.com/sharkdp/bat
 #==============================================================#
-
+PWD="$(pwd)" # Remember User's Starting Directory
+DIR="$HOME/.local/share/flash" # Where Decks Are Located
+EXAMPLE_DECK="$HOME/.local/share/flash/deck.csv"
+COUNTER=0
 DIR_MADE_MSG="
 Your '~/.local/share/flash' directory has been made and
 your 'deck.csv' file is ready for you to enter your flashcard data
 "
-PWD="$(pwd)" # Remember User's Starting Directory
-DIR="$HOME/.local/share/flash" # Where Decks Are Located
-COUNTER=0
 NO_DECKS="
 No decks were found, please make a new deck
 using ':' as a delimiter in a '.csv' file in
 the '.local/share/flash' directory.
 "
-TEMPLATE_DECK="$HOME/.local/share/flash/deck.csv"
+DECK_TEMPLATE="category1:question1:answer1
+category2:question2:answer2
+category3:question3:answer3
+"
 
 if [ ! -d $DIR ];then # If Directory does NOT exist
     echo "No '.local/share/flash' directory, make it? y/n"
@@ -43,7 +46,7 @@ if [ ! -d $DIR ];then # If Directory does NOT exist
         case "$RESPONSE" in
             [Nn]) exit ;;
             [Qq]) exit ;;
-            [Yy]) mkdir $DIR && touch $TEMPLATE_DECK && echo "category1:question1:answer1" >> $TEMPLATE_DECK && echo "category2:question2:answer2" >> $TEMPLATE_DECK && echo "category3:question3:answer3" >> $TEMPLATE_DECK && echo "$DIR_MADE_MSG" ;;
+            [Yy]) mkdir "$DIR" && touch $EXAMPLE_DECK && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo "$DIR_MADE_MSG" ;;
             *) echo "invalid choice, please select either 'y' or 'n'" ;;
         esac
 fi

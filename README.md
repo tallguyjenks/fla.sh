@@ -1,5 +1,5 @@
 <h1 align="center">
-# flash.sh
+![](/img/flashheader.png)
 </h1>
 
 > flashcards in your terminal! This script was inspired by a basic script i saw in a youtube video by a user named nixcasts. I Like the Anki flashcard system and so im working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
@@ -34,3 +34,9 @@ Organized like this:
 > `category:question:answer`
 
 enjoy!
+
+<h1 align="center">
+![](/img/flashfooter.png)
+</h1>
+
+<p align="center"><a href="https://github.com/arcticicestudio/nord/blob/develop/LICENSE.md"><img src="https://img.shields.io/static/v1.svg?style=flat-square&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=4c566a&colorB=88c0d0"/></a></p>

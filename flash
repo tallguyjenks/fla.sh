@@ -81,8 +81,7 @@ Programming:What is the best computer to program on?:Thinkpad:999
 History:When was flash.sh created?:April 2020:999
 Math:What do you call a number only divisible by itself and 1?:Prime:0
 Science:What is the distance between the Earth and Sol called?:An Astronomical Unit (AU):1
-Programming:Best operating system?:Arch, because BTW i run Arch:999
-"
+Programming:Best operating system?:Arch, because BTW i run Arch:999"
 
 if [ ! -d $DIR ];then # If Directory does NOT exist
     echo "No '.local/share/flash' directory, make it? y/n"

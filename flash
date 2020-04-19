@@ -22,21 +22,36 @@
 #     fzf - https://github.com/junegunn/fzf
 #     bat - https://github.com/sharkdp/bat
 #==============================================================#
+
+#ANSI FOREGROUND ESCAPE COLORS
+RED='\033[0;31m'
+LRED='\033[1;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+LGREEN='\033[1;32m'
+ORANGE='\033[0;33m'
+LGREY='\033[0;37m'
+WHITE='\033[1;37m'
+NC='\033[0m' # No Color
+
+#ANSI BACKGROUND ESCAPE COLORS
+WHITEBG='\033[1;47m'
+
 PWD="$(pwd)" # Remember User's Starting Directory
 DIR="$HOME/.local/share/flash" # Where Decks Are Located
 EXAMPLE_DECK="$HOME/.local/share/flash/deck.csv"
 COUNTER=0
 DIR_MADE_MSG="
-Your '~/.local/share/flash' directory has been made and
-your 'deck.csv' file is ready for you to enter your flashcard data
+Your ${LRED}~/.local/share/flash${NC} directory has been made and
+your ${ORANGE}deck.csv${NC} file is ready for you to enter your flashcard data
 "
 NO_DECKS="
 No decks were found, please make a new deck
-using ':' as a delimiter in a '.csv' file in
-the '.local/share/flash' directory.
+using ${ORANGE}:${NC} as a delimiter in a ${ORANGE}.csv${NC} file in
+the ${LRED}.local/share/flash${NC} directory.
 
 An example of a card:
-'Math:What is the square root of 4?:2:0'
+${GREEN}Math:What is the square root of 4?:2:0${NC}
 "
 DECK_TEMPLATE="History:When was the declaration of independence signed?:1776:0
 Math:What is the square root of 4?:2:4
@@ -74,7 +89,7 @@ if [ ! -d $DIR ];then # If Directory does NOT exist
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;
-            [Yy]) mkdir "$DIR" && touch $EXAMPLE_DECK && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo "$DIR_MADE_MSG" ;;
+            [Yy]) mkdir "$DIR" && touch $EXAMPLE_DECK && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo -e "$DIR_MADE_MSG" && exit;;
             *) echo "invalid choice, please select either 'y' or 'n'" && exit ;;
         esac
 fi
@@ -82,36 +97,34 @@ fi
 cd "$DIR"
 
 if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then # If there are no flashcard decks available
-    echo "$NO_DECKS" && cd "$PWD" && exit
+    echo -e "$NO_DECKS" && cd "$PWD" && exit
 fi
 
 # Show pretty FZF preview of decks using BAT
 DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
 
-RED='\033[0;31m'
-NC='\033[0m'
 main(){
     IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head | shuf -n 1)
     clear
-    echo "===================================================="
-    echo "Cards Reviewed: $COUNTER"
-    echo "Category:
+    echo -e "${WHITEBG}${WHITE}===========================================================${NC}"
+    echo -e "${ORANGE}Cards Reviewed:${NC} $COUNTER"
+    echo -e "${LGREY}Category:${NC}
         ${q[0]}"
-    echo "Question:
+    echo -e "${LGREY}Question:${NC}
         ${q[1]}"
     echo ''
     read -sn 1 NEXT
     if [ "$NEXT" = q ]; then
         cd "$PWD" && exit
     fi
-    echo "Answer:
+    echo -e "${LGREY}Answer:${NC}
         ${q[2]}"
     echo ''
-    echo "===================================================="
+    echo -e "${WHITEBG}${WHITE}===========================================================${NC}"
     echo ''
-    echo "How Difficult Was This Question?"
+    echo -e "${LGREY}How Difficult Was This Question?${NC}"
     echo ''
-    echo -e "${RED}Hard${NC} [1]   Difficult [2]   Normal [3]   Mild [4]   Easy [5]"
+    echo -e "${LRED}Hard${NC} [1]   ${RED}Difficult${NC} [2]   ${YELLOW}Normal${NC} [3]   ${GREEN}Mild${NC} [4]   ${LGREEN}Easy${NC} [5]"
     echo ''
     read -sn 1 DIFFICULTY_SCORE
     clear

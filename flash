@@ -73,10 +73,9 @@ if [ ! -d $DIR ];then # If Directory does NOT exist
     echo "No '.local/share/flash' directory, make it? y/n"
     read RESPONSE
         case "$RESPONSE" in
-            [Nn]) exit ;;
-            [Qq]) exit ;;
+            [QqNn]) exit ;;
             [Yy]) mkdir "$DIR" && touch $EXAMPLE_DECK && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo "$DIR_MADE_MSG" ;;
-            *) echo "invalid choice, please select either 'y' or 'n'" ;;
+            *) echo "invalid choice, please select either 'y' or 'n'" && exit ;;
         esac
 fi
 

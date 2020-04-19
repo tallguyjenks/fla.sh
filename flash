@@ -37,6 +37,9 @@ NC='\033[0m' # No Color
 #ANSI BACKGROUND ESCAPE COLORS
 WHITEBG='\033[1;47m'
 
+# FONT FORMAT EXCAPE CODES
+BOLD='\e[1m'
+
 PWD="$(pwd)" # Remember User's Starting Directory
 DIR="$HOME/.local/share/flash" # Where Decks Are Located
 EXAMPLE_DECK="$HOME/.local/share/flash/deck.csv"
@@ -84,12 +87,12 @@ Science:What is the distance between the Earth and Sol called?:An Astronomical U
 Programming:Best operating system?:Arch, because BTW i run Arch:999"
 
 if [ ! -d $DIR ];then # If Directory does NOT exist
-    echo "No '.local/share/flash' directory, make it? y/n"
+    echo -e "No ${LRED}.local/share/flash${NC} directory, make it? ${LGREEN}y${NC}/${LRED}n${NC}"
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;
             [Yy]) mkdir "$DIR" && touch $EXAMPLE_DECK && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo -e "$DIR_MADE_MSG" && exit;;
-            *) echo "invalid choice, please select either 'y' or 'n'" && exit ;;
+            *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit ;;
         esac
 fi
 
@@ -105,26 +108,26 @@ DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarize
 main(){
     IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head | shuf -n 1)
     clear
-    echo -e "${WHITEBG}${WHITE}===========================================================${NC}"
-    echo -e "${ORANGE}Cards Reviewed:${NC} $COUNTER"
+    echo -e "${WHITEBG}          Flash.sh - Flash Cards In Your Terminal          ${NC}"
+    echo -e "${ORANGE}${BOLD}Cards ${BOLD}Reviewed:${NC} $COUNTER"
     echo -e "${LGREY}Category:${NC}
         ${q[0]}"
     echo -e "${LGREY}Question:${NC}
         ${q[1]}"
-    echo ''
+    echo -e ""
     read -sn 1 NEXT
     if [ "$NEXT" = q ]; then
         cd "$PWD" && exit
     fi
     echo -e "${LGREY}Answer:${NC}
         ${q[2]}"
-    echo ''
+    echo -e ""
     echo -e "${WHITEBG}${WHITE}===========================================================${NC}"
-    echo ''
+    echo -e ""
     echo -e "${LGREY}How Difficult Was This Question?${NC}"
-    echo ''
+    echo -e ""
     echo -e "${LRED}Hard${NC} [1]   ${RED}Difficult${NC} [2]   ${YELLOW}Normal${NC} [3]   ${GREEN}Mild${NC} [4]   ${LGREEN}Easy${NC} [5]"
-    echo ''
+    echo -e ""
     read -sn 1 DIFFICULTY_SCORE
     clear
 

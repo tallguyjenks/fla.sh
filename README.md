@@ -27,11 +27,16 @@ To utilize this script copy/move it to your `~/.local/bin/` folder or any place 
 
 ## Usage
 
-The `deck.csv` file should have colon `:` seperated values in 3 columns
+The `deck.csv` file should have colon `:` seperated values in 4 columns
 
 Organized like this:
 
-> `category:question:answer`
+> `category:question:answer:0`
+
+**First Field:** The category of the flashcard
+**Second Field:** The Question being asked
+**Third Field:** The Hidden Answer
+**Fourth Field:** The Score*
 
 ## Videos
 

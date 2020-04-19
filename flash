@@ -53,7 +53,7 @@ fi
 
 cd "$DIR"
 
-if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then
+if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then # If there are no flashcard decks available
     echo "$NO_DECKS" && cd "$PWD" && exit
 fi
 
@@ -79,7 +79,24 @@ main(){
     echo "Answer: ${q[2]}"
     echo ''
     echo "===================================================="
+    echo ''
+    echo "How Difficult Was This Question?"
+    echo ''
+    echo "Hard [1]   Difficult [2]   Normal [3]   Mild [4]   Easy [5]"
+    echo ''
+    read -n 1 -p "Answer: " DIFFICULTY_SCORE
+    case "$DIFFICULTY_SCORE" in
+        [15]) POINTS=2 ;;
+        [24]) POINTS=1 ;;
+        3) POINTS=0 ;;
+        *) echo "Invalid Option" ;;
+    esac
+    echo ''                     #DEBUG
+    echo "$DIFFICULTY_SCORE"    #DEBUG
+    echo "$POINTS"              #DEBUG
     COUNTER="$(($COUNTER+1))"
+
+    # echo "${q[0]}:${q[1]}:${q[2]}:${q[3]}"
 }
 
 while true; do

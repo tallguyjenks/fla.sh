@@ -35,9 +35,9 @@ No decks were found, please make a new deck
 using ':' as a delimiter in a '.csv' file in
 the '.local/share/flash' directory.
 "
-DECK_TEMPLATE="category1:question1:answer1
-category2:question2:answer2
-category3:question3:answer3
+DECK_TEMPLATE="category1:question1:answer1:0
+category2:question2:answer2:0
+category3:question3:answer3:0
 "
 
 if [ ! -d $DIR ];then # If Directory does NOT exist
@@ -61,7 +61,7 @@ fi
 DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
 
 main(){
-    IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head -n | shuf -n 1)
+    IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head | shuf -n 1)
     if [ $COUNTER -gt 0 ]; then # If not the first flash card then pause before screen clearing
         read _
     fi
@@ -103,7 +103,7 @@ main(){
             3) NEW_ITEM_SCORE=1 ;;#NORMAL
             4) NEW_ITEM_SCORE=2 ;;#MILD
             5) NEW_ITEM_SCORE=3 ;;#EASY
-           *) NEW_ITEM_SCORE="${q[3]}" ;;#INVALID
+            *) NEW_ITEM_SCORE=1 ;;#INVALID
         esac
     else
         case "$DIFFICULTY_SCORE" in

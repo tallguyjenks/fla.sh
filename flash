@@ -94,14 +94,17 @@ main(){
     clear
     echo "===================================================="
     echo "Cards Reviewed: $COUNTER"
-    echo "Category: ${q[0]}"
-    echo "Question: ${q[1]}"
+    echo "Category:
+        ${q[0]}"
+    echo "Question:
+        ${q[1]}"
     echo ''
     read -sn 1 NEXT
     if [ "$NEXT" = q ]; then
         cd "$PWD" && exit
     fi
-    echo "Answer: ${q[2]}"
+    echo "Answer:
+        ${q[2]}"
     echo ''
     echo "===================================================="
     echo ''

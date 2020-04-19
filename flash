@@ -61,7 +61,7 @@ fi
 DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
 
 main(){
-    IFS=$':'; read -a q <<<$(shuf -n 1 "$DECK")
+    IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head -n | shuf -n 1)
     if [ $COUNTER -gt 0 ]; then # If not the first flash card then pause before screen clearing
         read _
     fi
@@ -73,8 +73,7 @@ main(){
     echo ''
     read -sn 1 NEXT
     if [ "$NEXT" = q ]; then
-        cd "$PWD"
-        exit
+        cd "$PWD" && exit
     fi
     echo "Answer: ${q[2]}"
     echo ''
@@ -85,18 +84,40 @@ main(){
     echo "Hard [1]   Difficult [2]   Normal [3]   Mild [4]   Easy [5]"
     echo ''
     read -n 1 -p "Answer: " DIFFICULTY_SCORE
-    case "$DIFFICULTY_SCORE" in
-        [15]) POINTS=2 ;;
-        [24]) POINTS=1 ;;
-        3) POINTS=0 ;;
-        *) echo "Invalid Option" ;;
-    esac
-    echo ''                     #DEBUG
-    echo "$DIFFICULTY_SCORE"    #DEBUG
-    echo "$POINTS"              #DEBUG
-    COUNTER="$(($COUNTER+1))"
 
-    # echo "${q[0]}:${q[1]}:${q[2]}:${q[3]}"
+    COUNTER="$(($COUNTER+1))" # Increment count for above test and card review count increment
+
+    if [ "${q[3]}" = 0 ]; then
+        NEW_ITEM_SCORE=0
+        case "$DIFFICULTY_SCORE" in
+            [123]) NEW_ITEM_SCORE=0 ;;#HARD DIFFICULTY & NORMAL
+            4) NEW_ITEM_SCORE=1 ;;#MILD
+            5) NEW_ITEM_SCORE=2 ;;#EASY
+            *) NEW_ITEM_SCORE=0 ;;#INVALID
+        esac
+
+    elif [ "${q[3]}" = 1 ]; then
+        case "$DIFFICULTY_SCORE" in
+            1) NEW_ITEM_SCORE=0 ;;#HARD
+            2) NEW_ITEM_SCORE=0 ;;#DIFFICULT
+            3) NEW_ITEM_SCORE=1 ;;#NORMAL
+            4) NEW_ITEM_SCORE=2 ;;#MILD
+            5) NEW_ITEM_SCORE=3 ;;#EASY
+           *) NEW_ITEM_SCORE="${q[3]}" ;;#INVALID
+        esac
+    else
+        case "$DIFFICULTY_SCORE" in
+            1) NEW_ITEM_SCORE="$((${q[3]}-2))" ;;#HARD
+            2) NEW_ITEM_SCORE="$((${q[3]}-1))" ;;#DIFFICULTY
+            3) NEW_ITEM_SCORE="${q[3]}" ;;#NORMAL
+            4) NEW_ITEM_SCORE="$((${q[3]}+1))" ;;#MILD
+            5) NEW_ITEM_SCORE="$((${q[3]}+2))" ;;#EASY
+            *) NEW_ITEM_SCORE="${q[3]}" ;;#INVALID
+        esac
+    fi
+
+    # Update item score for each flashcard item
+    sed -i "s/${q[0]}:${q[1]}:${q[2]}:${q[3]}/${q[0]}:${q[1]}:${q[2]}:$NEW_ITEM_SCORE/g" "$DECK"
 }
 
 while true; do

@@ -88,6 +88,8 @@ fi
 # Show pretty FZF preview of decks using BAT
 DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
 
+RED='\033[0;31m'
+NC='\033[0m'
 main(){
     IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head | shuf -n 1)
     clear
@@ -109,7 +111,7 @@ main(){
     echo ''
     echo "How Difficult Was This Question?"
     echo ''
-    echo "Hard [1]   Difficult [2]   Normal [3]   Mild [4]   Easy [5]"
+    echo -e "${RED}Hard${NC} [1]   Difficult [2]   Normal [3]   Mild [4]   Easy [5]"
     echo ''
     read -sn 1 DIFFICULTY_SCORE
     clear

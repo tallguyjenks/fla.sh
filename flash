@@ -62,9 +62,6 @@ DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarize
 
 main(){
     IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head | shuf -n 1)
-    if [ $COUNTER -gt 0 ]; then # If not the first flash card then pause before screen clearing
-        read _
-    fi
     clear
     echo "===================================================="
     echo "Cards Reviewed: $COUNTER"
@@ -83,7 +80,8 @@ main(){
     echo ''
     echo "Hard [1]   Difficult [2]   Normal [3]   Mild [4]   Easy [5]"
     echo ''
-    read -n 1 -p "Answer: " DIFFICULTY_SCORE
+    read -sn 1 DIFFICULTY_SCORE
+    clear
 
     COUNTER="$(($COUNTER+1))" # Increment count for above test and card review count increment
 

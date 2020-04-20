@@ -104,6 +104,9 @@ fi
 
 # Show pretty FZF preview of decks using BAT
 DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
+if [ -z $DECK ]; then # If Variable String Length is 0
+    exit
+fi
 
 main(){
     IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head | shuf -n 1)

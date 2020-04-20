@@ -54,12 +54,13 @@ Organized like this:
 This is free, open-source software. If you'd like to support the development of future projects, or say thanks for this one, you can donate to me through [paypal](https://www.paypal.me/tallguyjenks) or buy me a coffee:
 
 <!-- Buy me a coffee -->
+<h3 align="center">
 <a href="https://www.buymeacoffee.com/tallguyjenks" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-
+</h3>
 <!-- Footer Image -->
-<h1 align="center">
+<h3 align="center">
 <img src="/img/flashfooter.png">
-</h1>
+</h3>
 
 <!-- Shields -->
 <p align="center"><a href="https://github.com/tallguyjenks/flash.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat-square&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a></p>

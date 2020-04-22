@@ -3,6 +3,15 @@
 <img src="/img/flashheader.png" height="50%" width="50%">
 </h1>
 
+<!-- Shields -->
+<p align="center">
+<a href="https://github.com/tallguyjenks/flash.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat-square&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
+<a href="https://github.com/tallguyjenks/flash.sh/releases/tag/v1.0"><img src="https://img.shields.io/github/downloads/tallguyjenks/flash.sh/v1.0/total?label=Downloads"></a>
+<img src="https://img.shields.io/github/commit-activity/m/tallguyjenks/flash.sh">
+<a href="https://github.com/tallguyjenks/flash.sh/graphs/contributors"><img src="https://img.shields.io/github/contributors/tallguyjenks/flash.sh"></a>
+<img src="https://img.shields.io/github/v/release/tallguyjenks/flash.sh">
+</p>
+
 <!-- Description -->
 > flashcards in your terminal! This script was inspired by a basic script i saw in a youtube video by a user named nixcasts. I Like the Anki flashcard system and so im working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
 
@@ -69,8 +78,3 @@ This is free, open-source software. If you'd like to support the development of 
 <img src="/img/flashfooter.png">
 </h3>
 
-<!-- Shields -->
-<p align="center">
-<a href="https://github.com/tallguyjenks/flash.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat-square&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
-<a href="https://github.com/tallguyjenks/flash.sh/releases/tag/v1.0"><img src="https://img.shields.io/github/downloads/tallguyjenks/flash.sh/v1.0/total?label=Downloads"></a>
-</p>

@@ -141,7 +141,7 @@ main(){
         ${q[1]}"
     echo -e ""
     read -sn 1 NEXT
-    if [ "$NEXT" = q ]; then
+    if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
         cd "$PWD" && exit
     fi
     echo -e "${LGREY}Answer:${NC}
@@ -154,6 +154,9 @@ main(){
     echo -e "${LRED}Hard${NC} [1]   ${RED}Difficult${NC} [2]   ${YELLOW}Normal${NC} [3]   ${GREEN}Mild${NC} [4]   ${LGREEN}Easy${NC} [5]"
     echo -e ""
     read -sn 1 DIFFICULTY_SCORE
+    if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then
+        cd "$PWD" && exit
+    fi
     clear
 
     COUNTER="$(($COUNTER+1))" # Increment count for above test and card review count increment

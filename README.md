@@ -5,7 +5,7 @@
 
 <!-- Shields -->
 <p align="center">
-<a href="https://github.com/tallguyjenks/flash.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat-square&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
+<a href="https://github.com/tallguyjenks/flash.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
 <a href="https://github.com/tallguyjenks/flash.sh/releases/tag/v1.0"><img src="https://img.shields.io/github/downloads/tallguyjenks/flash.sh/v1.0/total?label=Downloads"></a>
 <img src="https://img.shields.io/github/commit-activity/m/tallguyjenks/flash.sh">
 <a href="https://github.com/tallguyjenks/flash.sh/graphs/contributors"><img src="https://img.shields.io/github/contributors/tallguyjenks/flash.sh"></a>

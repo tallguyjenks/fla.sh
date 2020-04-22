@@ -23,31 +23,40 @@
 #     bat - https://github.com/sharkdp/bat
 #==============================================================#
 
-#ANSI FOREGROUND ESCAPE COLORS
-RED='\033[0;31m'
-LRED='\033[1;31m'
-YELLOW='\033[1;33m'
-GREEN='\033[0;32m'
-LGREEN='\033[1;32m'
-ORANGE='\033[0;33m'
-LGREY='\033[0;37m'
-WHITE='\033[1;37m'
-NC='\033[0m' # No Color
+# USER CUSTOMIZABLE VARIABLES
+    CARD_POOL_SIZE=10 # How large the pool size is for shuf to draw from
+    SEARCH_DEPTH=999  # How many levels to recursively search for .csv's in .local/share/flash
 
-#ANSI BACKGROUND ESCAPE COLORS
-WHITEBG='\033[1;47m'
 
+# ANSI FOREGROUND ESCAPE COLORS
+    RED='\033[0;31m'
+    LRED='\033[1;31m'
+    YELLOW='\033[1;33m'
+    GREEN='\033[0;32m'
+    LGREEN='\033[1;32m'
+    ORANGE='\033[0;33m'
+    LGREY='\033[0;37m'
+    WHITE='\033[1;37m'
+    NC='\033[0m' # No Color
+# ANSI BACKGROUND ESCAPE COLORS
+    WHITEBG='\033[1;47m'
 # FONT FORMAT EXCAPE CODES
-BOLD='\e[1m'
+    BOLD='\e[1m'
 
-PWD="$(pwd)" # Remember User's Starting Directory
-DIR="$HOME/.local/share/flash" # Where Decks Are Located
-EXAMPLE_DECK="$HOME/.local/share/flash/deck.csv"
-COUNTER=0
+# Remember User's Starting Directory
+    PWD="$(pwd)"
+# Where Decks Are Located
+    DIR="$HOME/.local/share/flash"
+# Where the example deck with be placed and named
+    EXAMPLE_DECK="$HOME/.local/share/flash/deck.csv"
+# Iterator for Count of cards reveiwed
+    COUNTER=0
+# Success message of setup process
 DIR_MADE_MSG="
 Your ${LRED}~/.local/share/flash${NC} directory has been made and
 your ${ORANGE}deck.csv${NC} file is ready for you to enter your flashcard data
 "
+# User has .local/share directory but no decks inside
 NO_DECKS="
 No decks were found, please make a new deck
 using ${ORANGE}:${NC} as a delimiter in a ${ORANGE}.csv${NC} file in
@@ -56,6 +65,7 @@ the ${LRED}.local/share/flash${NC} directory.
 An example of a card:
 ${GREEN}Math:What is the square root of 4?:2:0${NC}
 "
+# The example flashcard deck to be made
 DECK_TEMPLATE="History:When was the declaration of independence signed?:1776:0
 Math:What is the square root of 4?:2:4
 Science:What is the charge of a proton?:Positive:2
@@ -86,7 +96,8 @@ Math:What do you call a number only divisible by itself and 1?:Prime:0
 Science:What is the distance between the Earth and Sol called?:An Astronomical Unit (AU):1
 Programming:Best operating system?:Arch, because BTW i run Arch:999"
 
-if [ ! -d $DIR ];then # If Directory does NOT exist
+# Test if .local/share exists and wether to offer setup process
+if [ ! -d $DIR ];then
     echo -e "No ${LRED}.local/share/flash${NC} directory, make it? ${LGREEN}y${NC}/${LRED}n${NC}"
     read RESPONSE
         case "$RESPONSE" in
@@ -96,20 +107,24 @@ if [ ! -d $DIR ];then # If Directory does NOT exist
         esac
 fi
 
-cd "$DIR"
+# go to the flashcard decks
+    cd "$DIR"
 
-if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then # If there are no flashcard decks available
+# If there are no flashcard decks available return user to starting location
+if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then
     echo -e "$NO_DECKS" && cd "$PWD" && exit
 fi
 
 # Show pretty FZF preview of decks using BAT
-DECK="$(find -maxdepth 999 -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
-if [ -z $DECK ]; then # If Variable String Length is 0
-    exit
+    DECK="$(find -maxdepth $SEARCH_DEPTH -iname '*.csv' | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
+
+# If no deck is selected in fzf menu, return user to start location and exit
+if [ -z $DECK ]; then
+    cd "$PWD" && exit
 fi
 
 main(){
-    IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head | shuf -n 1)
+    IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)
     clear
     echo -e "${WHITEBG}          Flash.sh - Flash Cards In Your Terminal          ${NC}"
     echo -e "${ORANGE}${BOLD}Cards ${BOLD}Reviewed:${NC} $COUNTER"

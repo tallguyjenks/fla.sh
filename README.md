@@ -45,10 +45,14 @@ Organized like this:
 
 > \* The score determines how often which cards are shown to you. A good idea is to start all your cards out at 0 so they are all served to you equally. As you study and review and mark the more familiar cards as 'Mild' or 'Easy' more points will be added. The lower point cards are sorted to the top and the top 10 are taken and shuffled and then drawn from. This way as you learn the material the items you are less familiar with bubble up into the shuffled pool for drawing and those that go up in points due to increased familiarity go down because you're rating the material as easier.
 
+### Decks
+
+If you would like to browse a collection of decks readily available in your subject matter that are comaptible with [flash.sh](https://github.com/tallguyjenks/flash.sh) then you should check out [Flash Decks](https://github.com/tallguyjenks/Flash-Decks).
+
 ## Media (accepting contributions)
 
-[Flash Cards In Your Terminal With Flash.sh](https://www.youtube.com/watch?v=KEWhOzDCfLg)
-[Flash.sh++ A Comprehensive Walk Through of My Bash Flashcard Script Project](https://www.youtube.com/watch?v=nPNPXEh6BUA)
+- [Flash Cards In Your Terminal With Flash.sh](https://www.youtube.com/watch?v=KEWhOzDCfLg)
+- [Flash.sh++ A Comprehensive Walk Through of My Bash Flashcard Script Project](https://www.youtube.com/watch?v=nPNPXEh6BUA)
 
 
 ## Support

@@ -51,6 +51,8 @@
     EXAMPLE_DECK="$HOME/.local/share/flash/deck.csv"
 # Track High score
     HIGH_SCORE="$HOME/.local/share/flash/.highscore"
+# Track number of cards reviewed per session
+    REVIEW_LOG="$HOME/.local/share/flash/.reviews"
 # Iterator for Count of cards reveiwed
     COUNTER=0
 # Success message of setup process
@@ -104,7 +106,7 @@ if [ ! -d $DIR ];then
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;
-            [Yy]) mkdir "$DIR" && touch {$EXAMPLE_DECK,$HIGH_SCORE} && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo -e "$DIR_MADE_MSG" && exit;;
+            [Yy]) mkdir "$DIR" && touch {$EXAMPLE_DECK,$HIGH_SCORE,$REVIEW_LOG} && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo -e "$DIR_MADE_MSG" && exit;;
             *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit ;;
         esac
 fi
@@ -117,9 +119,14 @@ if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then
     echo -e "$NO_DECKS" && cd "$PWD" && exit
 fi
 
-# If highscore file was removed, remake it.
+# if highscore file was removed, remake it.
 if [ ! -e "$HIGH_SCORE" ]; then
     touch "$HIGH_SCORE"
+fi
+
+# if reviewed file was removed, remake it.
+if [ ! -e "$REVIEW_LOG" ]; then
+    touch "$REVIEW_LOG"
 fi
 
 # Show pretty FZF preview of decks using BAT
@@ -134,7 +141,10 @@ main(){
     IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)
     clear
     echo -e "${WHITEBG}          Flash.sh - Flash Cards In Your Terminal          ${NC}"
-    echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC} $COUNTER\t${ORANGE}${BOLD}High Score:${BOLD}${NC} $(cat $HIGH_SCORE)"
+    echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER"
+    echo -e "    ${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat $HIGH_SCORE)"
+    echo -e "    ${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' $REVIEW_LOG)"
+    echo -e ""
     echo -e "${LGREY}Category:${NC}
         ${q[0]}"
     echo -e "${LGREY}Question:${NC}
@@ -142,7 +152,7 @@ main(){
     echo -e ""
     read -sn 1 NEXT
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
-        cd "$PWD" && exit
+        add_usage_entry && cd "$PWD" && exit
     fi
     echo -e "${LGREY}Answer:${NC}
         ${q[2]}"
@@ -155,7 +165,7 @@ main(){
     echo -e ""
     read -sn 1 DIFFICULTY_SCORE
     if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then
-        cd "$PWD" && exit
+        add_usage_entry && cd "$PWD" && exit
     fi
     clear
 
@@ -202,6 +212,16 @@ main(){
         echo "$COUNTER" > "$HIGH_SCORE"
     fi
 
+}
+
+add_usage_entry(){
+    if [ ! "$COUNTER" = 0 ]; then
+        # Create a New Entry
+        TIME_STAMP="$(date --rfc-3339=seconds)"
+        REVIEWED_DECK="$(echo $EXAMPLE_DECK | awk -F/ '{print $7}')"
+        printf -v ENTRY "TimeStamp: %s Deck: %s cardsReviewed: %s" "$TIME_STAMP" "$REVIEWED_DECK" "$COUNTER"
+        echo "$ENTRY" >> "$REVIEW_LOG"
+    fi
 }
 
 while true; do

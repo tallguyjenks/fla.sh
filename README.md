@@ -70,4 +70,7 @@ This is free, open-source software. If you'd like to support the development of 
 </h3>
 
 <!-- Shields -->
-<p align="center"><a href="https://github.com/tallguyjenks/flash.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat-square&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a></p>
+<p align="center">
+<a href="https://github.com/tallguyjenks/flash.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat-square&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
+<a href="https://github.com/tallguyjenks/flash.sh/releases/tag/v1.0"><img src="https://img.shields.io/github/downloads/tallguyjenks/flash.sh/v1.0/total?label=Downloads"></a>
+</p>

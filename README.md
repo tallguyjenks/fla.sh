@@ -51,6 +51,7 @@ If you would like to browse a collection of decks readily available in your subj
 
 ## Media (accepting contributions)
 
+- [(OLD)Flash.sh Plain Text Flashcards in your Terminal](https://www.youtube.com/watch?v=DbakjEAc_MU)
 - [Flash Cards In Your Terminal With Flash.sh](https://www.youtube.com/watch?v=KEWhOzDCfLg)
 - [Flash.sh++ A Comprehensive Walk Through of My Bash Flashcard Script Project](https://www.youtube.com/watch?v=nPNPXEh6BUA)
 

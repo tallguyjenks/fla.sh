@@ -49,6 +49,8 @@
     DIR="$HOME/.local/share/flash"
 # Where the example deck with be placed and named
     EXAMPLE_DECK="$HOME/.local/share/flash/deck.csv"
+# Track High score
+    HIGH_SCORE="$HOME/.local/share/flash/.highscore"
 # Iterator for Count of cards reveiwed
     COUNTER=0
 # Success message of setup process
@@ -102,7 +104,7 @@ if [ ! -d $DIR ];then
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;
-            [Yy]) mkdir "$DIR" && touch $EXAMPLE_DECK && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo -e "$DIR_MADE_MSG" && exit;;
+            [Yy]) mkdir "$DIR" && touch {$EXAMPLE_DECK,$HIGH_SCORE} && echo "$DECK_TEMPLATE" >> $EXAMPLE_DECK && echo -e "$DIR_MADE_MSG" && exit;;
             *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit ;;
         esac
 fi
@@ -113,6 +115,11 @@ fi
 # If there are no flashcard decks available return user to starting location
 if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then
     echo -e "$NO_DECKS" && cd "$PWD" && exit
+fi
+
+# If highscore file was removed, remake it.
+if [ ! -e "$HIGH_SCORE" ]; then
+    touch "$HIGH_SCORE"
 fi
 
 # Show pretty FZF preview of decks using BAT
@@ -127,7 +134,7 @@ main(){
     IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)
     clear
     echo -e "${WHITEBG}          Flash.sh - Flash Cards In Your Terminal          ${NC}"
-    echo -e "${ORANGE}${BOLD}Cards ${BOLD}Reviewed:${NC} $COUNTER"
+    echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC} $COUNTER\t${ORANGE}${BOLD}High Score:${BOLD}${NC} $(cat $HIGH_SCORE)"
     echo -e "${LGREY}Category:${NC}
         ${q[0]}"
     echo -e "${LGREY}Question:${NC}
@@ -182,6 +189,16 @@ main(){
 
     # Update item score for each flashcard item
     sed -i "s/${q[0]}:${q[1]}:${q[2]}:${q[3]}/${q[0]}:${q[1]}:${q[2]}:$NEW_ITEM_SCORE/g" "$DECK"
+    # Update highscore if new highscore is achieved
+    if [ -z "$(cat $HIGH_SCORE)" ]; then
+        echo "$COUNTER" > "$HIGH_SCORE"
+    fi
+
+    # If Cards Reviewed > Current High Score, Update
+    if [ "$COUNTER" -gt "$(cat $HIGH_SCORE)" ]; then
+        echo "$COUNTER" > "$HIGH_SCORE"
+    fi
+
 }
 
 while true; do

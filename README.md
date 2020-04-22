@@ -6,7 +6,7 @@
 <!-- Description -->
 > flashcards in your terminal! This script was inspired by a basic script i saw in a youtube video by a user named nixcasts. I Like the Anki flashcard system and so im working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
 
-![Preview](./img/flash_preview.png)
+![Preview of flash.sh](./img/flash_preview.png)
 
 This script is an expanded version of the one featured in [This nixcasts Video](https://www.youtube.com/watch?v=lX8jqo70r1I)
 
@@ -29,7 +29,7 @@ To utilize this script copy/move it to your `~/.local/bin/` folder or any place 
 
 ## Usage
 
-The `deck.csv` file should have colon `:` seperated values in 4 columns
+The `deck.csv` file should have colon `:` separated values in 4 columns
 
 Organized like this:
 
@@ -43,11 +43,13 @@ Organized like this:
 
 **Fourth Field:** _The Score*_
 
-> \* The score determines how often which cards are shown to you. a good idea is to start all your cards out at 0 so they are all served to you equally. As you study and review and mark the more familiar cards as 'Mild' or 'Easy' more points will be added. The lower point cards are sorted to the top and the top 10 are taken and shuffled and then drawn from. This way as you learn the material the items you are less familiar with bubble up into the shuffled pool for drawing and those that go up in points due to increased familiarity go down because you're rating the material as easier. 
+> \* The score determines how often which cards are shown to you. A good idea is to start all your cards out at 0 so they are all served to you equally. As you study and review and mark the more familiar cards as 'Mild' or 'Easy' more points will be added. The lower point cards are sorted to the top and the top 10 are taken and shuffled and then drawn from. This way as you learn the material the items you are less familiar with bubble up into the shuffled pool for drawing and those that go up in points due to increased familiarity go down because you're rating the material as easier.
 
-## Videos
+## Media (accepting contributions)
 
 [Flash Cards In Your Terminal With Flash.sh](https://www.youtube.com/watch?v=KEWhOzDCfLg)
+[Flash.sh++ A Comprehensive Walk Through of My Bash Flashcard Script Project](https://www.youtube.com/watch?v=nPNPXEh6BUA)
+
 
 ## Support
 

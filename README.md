@@ -34,6 +34,16 @@ Install these prior to running the script.
 
 ## Installation
 
+### Windows
+
+Untested, not sure if this script and its dependencies will work with WSL or not.
+
+### Mac
+
+Untested, but looking for help in testing see #11
+
+### Linux
+
 To utilize this script copy/move it to your `~/.local/bin/` folder or any place in your `$PATH`
 
 ## Usage

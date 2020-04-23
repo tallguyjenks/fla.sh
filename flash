@@ -27,7 +27,6 @@
     CARD_POOL_SIZE=10 # How large the pool size is for shuf to draw from
     SEARCH_DEPTH=999  # How many levels to recursively search for .csv's in .local/share/flash
 
-
 # ANSI FOREGROUND ESCAPE COLORS
     RED='\033[0;31m'
     LRED='\033[1;31m'
@@ -48,11 +47,11 @@
 # Where Decks Are Located
     DIR="$HOME/.local/share/flash"
 # Where the example deck with be placed and named
-    EXAMPLE_DECK="$HOME/.local/share/flash/deck.csv"
+    EXAMPLE_DECK="$DIR/deck.csv"
 # Track High score
-    HIGH_SCORE="$HOME/.local/share/flash/.highscore"
+    HIGH_SCORE="$DIR/.highscore"
 # Track number of cards reviewed per session
-    REVIEW_LOG="$HOME/.local/share/flash/.reviews"
+    REVIEW_LOG="$DIR/.reviews"
 # Iterator for Count of cards reveiwed
     COUNTER=0
 # Success message of setup process
@@ -102,7 +101,7 @@ Programming:Best operating system?:Arch, because BTW i run Arch:999"
 
 # Test if .local/share exists and wether to offer setup process
 if [ ! -d $DIR ];then
-    echo -e "No ${LRED}.local/share/flash${NC} directory, make it? ${LGREEN}y${NC}/${LRED}n${NC}"
+    echo -e "No ${LRED}.local/share/flash${NC} directory, make it? ${LGREEN}Y${NC}/${LRED}N${NC}"
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;

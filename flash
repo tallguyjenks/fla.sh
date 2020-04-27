@@ -134,7 +134,7 @@ if [ ! -e "$REVIEW_LOG" ]; then
 fi
 
 # Show pretty FZF preview of decks using BAT
-    DECK="$(find -maxdepth $SEARCH_DEPTH -iname '*.csv' | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
+    DECK=$(find -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')
 
 # If no deck is selected in fzf menu, return user to start location and exit
 if [ -z "$DECK" ]; then

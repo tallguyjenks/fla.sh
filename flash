@@ -106,7 +106,7 @@ Programming:Best operating system?:Arch, because BTW i run Arch:999"
 
 # Test if .local/share exists and wether to offer setup process
 if [ ! -d "$DIR" ];then
-    echo -e "No ${LRED}.local/share/flash${NC} directory, make it? ${LGREEN}Y${NC}/${LRED}N${NC}"
+    echo -e "No ${LRED}$DIR/flash${NC} directory, make it? ${LGREEN}Y${NC}/${LRED}N${NC}"
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;

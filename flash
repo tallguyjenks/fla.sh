@@ -61,14 +61,14 @@
     COUNTER=0
 # Success message of setup process
 DIR_MADE_MSG="
-Your ${LRED}~/.local/share/flash${NC} directory has been made and
+Your ${LRED}$DIR${NC} directory has been made and
 your ${ORANGE}deck.csv${NC} file is ready for you to enter your flashcard data
 "
 # User has .local/share directory but no decks inside
 NO_DECKS="
 No decks were found, please make a new deck
 using ${ORANGE}:${NC} as a delimiter in a ${ORANGE}.csv${NC} file in
-the ${LRED}.local/share/flash${NC} directory.
+the ${LRED}$DIR${NC} directory.
 
 An example of a card:
 ${GREEN}Math:What is the square root of 4?:2:0${NC}
@@ -110,7 +110,7 @@ if [ ! -d "$DIR" ];then
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;
-            [Yy]) mkdir "$DIR" && touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} && echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" && exit;;
+            [Yy]) mkdir "$DIR" && touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} && echo "$DECK_TEMPLATE" > "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" && exit;;
             *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit ;;
         esac
 fi

@@ -105,7 +105,7 @@ Science:What is the distance between the Earth and Sol called?:An Astronomical U
 Programming:Best operating system?:Arch, because BTW i run Arch:999"
 
 # Test if .local/share exists and wether to offer setup process
-if [ ! -d $DIR ];then
+if [ ! -d "$DIR" ];then
     echo -e "No ${LRED}.local/share/flash${NC} directory, make it? ${LGREEN}Y${NC}/${LRED}N${NC}"
     read RESPONSE
         case "$RESPONSE" in
@@ -137,7 +137,7 @@ fi
     DECK="$(find -maxdepth $SEARCH_DEPTH -iname '*.csv' | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
 
 # If no deck is selected in fzf menu, return user to start location and exit
-if [ -z $DECK ]; then
+if [ -z "$DECK" ]; then
     cd "$PWD" && exit
 fi
 

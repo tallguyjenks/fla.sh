@@ -44,9 +44,14 @@
 
 # Remember User's Starting Directory
     PWD="$(pwd)"
-# Where Decks Are Located
-    DIR="$HOME/.local/share/flash"
-# Where the example deck with be placed and named
+# Where Decks Are Located for linux & mac
+    OS="$(uname)"
+    case "$OS" in
+        "Darwin") DIR="$HOME/Library/Application Support/flash" ;;
+        "Linux") DIR="$HOME/.local/share/flash" ;;
+        *) DIR="$HOME/.local/share/flash" ;;
+    esac
+# Where the example deck will be placed and named
     EXAMPLE_DECK="$DIR/deck.csv"
 # Track High score
     HIGH_SCORE="$DIR/.highscore"
@@ -168,7 +173,7 @@ main(){
     fi
     clear
 
-    COUNTER="$(($COUNTER+1))" # Increment count for above test and card review count increment
+    COUNTER="$(($COUNTER+1))" # Increment count for card review count increment
 
     if [ "${q[3]}" = 0 ]; then
         NEW_ITEM_SCORE=0
@@ -201,7 +206,7 @@ main(){
 
     # Update item score for each flashcard item
     sed -i "s/${q[0]}:${q[1]}:${q[2]}:${q[3]}/${q[0]}:${q[1]}:${q[2]}:$NEW_ITEM_SCORE/g" "$DECK"
-    # Update highscore if new highscore is achieved
+    # If no highscore currently set, set it.
     if [ -z "$(cat $HIGH_SCORE)" ]; then
         echo "$COUNTER" > "$HIGH_SCORE"
     fi

@@ -119,7 +119,7 @@ fi
     cd "$DIR"
 
 # If there are no flashcard decks available return user to starting location
-if [ "$(find -maxdepth 999 -iname "*.csv" | wc -l)" = 0 ]; then
+if [ "$(find -maxdepth $SEARCH_DEPTH -iname "*.csv" | wc -l)" = 0 ]; then
     echo -e "$NO_DECKS" && cd "$PWD" && exit
 fi
 

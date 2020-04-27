@@ -40,7 +40,7 @@ Untested, not sure if this script and its dependencies will work with WSL or not
 
 ### Mac
 
-Untested, but looking for help in testing see #11
+Untested, but looking for help in testing see [#11](https://github.com/tallguyjenks/flash.sh/issues/11)
 
 ### Linux
 

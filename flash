@@ -110,7 +110,7 @@ if [ ! -d "$DIR" ];then
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;
-            [Yy]) mkdir "$DIR" && touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} && echo "$DECK_TEMPLATE" > "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" && exit;;
+            [Yy]) mkdir "$DIR" && touch "$DIR"{/deck.csv,/.highscore,/.reviews} && echo "$DECK_TEMPLATE" > "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" && exit ;;
             *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit ;;
         esac
 fi

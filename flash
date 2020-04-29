@@ -104,13 +104,15 @@ Math:What do you call a number only divisible by itself and 1?:Prime:0
 Science:What is the distance between the Earth and Sol called?:An Astronomical Unit (AU):1
 Programming:Best operating system?:Arch, because BTW i run Arch:999"
 
+setup(){ mkdir "$DIR" && touch "$DIR/deck.csv" && touch "$DIR/.highscore" && touch "$DIR/.reviews" && echo "$DECK_TEMPLATE" > "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" ;}
+
 # Test if .local/share exists and wether to offer setup process
 if [ ! -d "$DIR" ];then
     echo -e "No ${LRED}$DIR${NC} directory, make it? ${LGREEN}Y${NC}/${LRED}N${NC}"
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;
-            [Yy]) mkdir "$DIR" && touch "$DIR/deck.csv" && touch "$DIR/.highscore" && touch "$DIR/.reviews" && echo "$DECK_TEMPLATE" > "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" && exit ;;
+            [Yy]) setup && exit ;;
             *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit ;;
         esac
 fi

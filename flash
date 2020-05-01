@@ -104,7 +104,7 @@ Math:What do you call a number only divisible by itself and 1?:Prime:0
 Science:What is the distance between the Earth and Sol called?:An Astronomical Unit (AU):1
 Programming:Best operating system?:Arch, because BTW i run Arch:999"
 
-setup(){ mkdir "$DIR" && eval touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"}  && $(echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK") && echo -e "$DIR_MADE_MSG" ;}
+setup(){ mkdir "$DIR" && eval touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"}  && echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" ;}
 
 # Test if .local/share exists and wether to offer setup process
 if [ ! -d "$DIR" ];then

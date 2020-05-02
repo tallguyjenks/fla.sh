@@ -5,17 +5,17 @@
 
 <!-- Shields -->
 <p align="center">
-<a href="https://github.com/tallguyjenks/flash.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
-<a href="https://github.com/tallguyjenks/flash.sh/releases/tag/v1.0"><img src="https://img.shields.io/github/downloads/tallguyjenks/flash.sh/v1.0/total?label=Downloads"></a>
-<img src="https://img.shields.io/github/commit-activity/m/tallguyjenks/flash.sh">
-<a href="https://github.com/tallguyjenks/flash.sh/graphs/contributors"><img src="https://img.shields.io/github/contributors/tallguyjenks/flash.sh"></a>
-<img src="https://img.shields.io/github/v/release/tallguyjenks/flash.sh">
+<a href="https://github.com/tallguyjenks/fla.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
+<a href="https://github.com/tallguyjenks/fla.sh/releases/tag/v1.0"><img src="https://img.shields.io/github/downloads/tallguyjenks/fla.sh/v1.0/total?label=Downloads"></a>
+<img src="https://img.shields.io/github/commit-activity/m/tallguyjenks/fla.sh">
+<a href="https://github.com/tallguyjenks/fla.sh/graphs/contributors"><img src="https://img.shields.io/github/contributors/tallguyjenks/fla.sh"></a>
+<img src="https://img.shields.io/github/v/release/tallguyjenks/fla.sh">
 </p>
 
 <!-- Description -->
 > flashcards in your terminal! This script was inspired by a basic script i saw in a youtube video by a user named nixcasts. I Like the Anki flashcard system and so im working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
 
-![Preview of flash.sh](./img/flash_preview.png)
+![Preview of fla.sh](./img/flash_preview.png)
 
 This script is an expanded version of the one featured in [This nixcasts Video](https://www.youtube.com/watch?v=lX8jqo70r1I)
 
@@ -40,7 +40,7 @@ Untested, not sure if this script and its dependencies will work with WSL or not
 
 ### Mac
 
-Untested, but looking for help in testing see [#11](https://github.com/tallguyjenks/flash.sh/issues/11)
+Untested, but looking for help in testing see [#11](https://github.com/tallguyjenks/fla.sh/issues/11)
 
 ### Linux
 
@@ -66,14 +66,14 @@ Organized like this:
 
 ### Decks
 
-If you would like to browse a collection of decks readily available in your subject matter that are comaptible with [flash.sh](https://github.com/tallguyjenks/flash.sh) then you should check out [Flash Decks](https://github.com/tallguyjenks/Flash-Decks).
+If you would like to browse a collection of decks readily available in your subject matter that are comaptible with [fla.sh](https://github.com/tallguyjenks/fla.sh) then you should check out [Flash Decks](https://github.com/tallguyjenks/Flash-Decks).
 
 ## Media (accepting contributions)
 
-- [(OLD)Flash.sh Plain Text Flashcards in your Terminal](https://www.youtube.com/watch?v=DbakjEAc_MU)
-- [Flash Cards In Your Terminal With Flash.sh](https://www.youtube.com/watch?v=KEWhOzDCfLg)
-- [Flash.sh++ A Comprehensive Walk Through of My Bash Flashcard Script Project](https://www.youtube.com/watch?v=nPNPXEh6BUA)
-- [Even Exam Prep Can Be Done From The Terminal With Flash.sh](https://www.youtube.com/watch?v=RJ094P7wxaU)
+- [(OLD)Fla.sh Plain Text Flashcards in your Terminal](https://www.youtube.com/watch?v=DbakjEAc_MU)
+- [Flash Cards In Your Terminal With Fla.sh](https://www.youtube.com/watch?v=KEWhOzDCfLg)
+- [Fla.sh++ A Comprehensive Walk Through of My Bash Flashcard Script Project](https://www.youtube.com/watch?v=nPNPXEh6BUA)
+- [Even Exam Prep Can Be Done From The Terminal With Fla.sh](https://www.youtube.com/watch?v=RJ094P7wxaU)
 
 
 ## Support

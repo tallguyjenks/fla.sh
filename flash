@@ -47,7 +47,7 @@
 # Where Decks Are Located for linux & mac
     OS="$(uname)"
     case "$OS" in
-        "Darwin") DIR="$HOME/Library/Application Support/flash" ;;
+        "Darwin") DIR="$HOME/Library/Application\ Support/flash" ;;
         "Linux") DIR="$HOME/.local/share/flash" ;;
         *) DIR="$HOME/.local/share/flash" ;;
     esac

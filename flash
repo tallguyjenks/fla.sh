@@ -146,7 +146,7 @@ fi
 main(){
     IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)
     clear
-    echo -e "${WHITEBG}          Flash.sh - Flash Cards In Your Terminal          ${NC}"
+    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}"
     echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER"
     echo -e "    ${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat $HIGH_SCORE)"
     echo -e "    ${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' $REVIEW_LOG)"

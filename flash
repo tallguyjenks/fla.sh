@@ -76,33 +76,33 @@ ${GREEN}Math:What is the square root of 4?:2:0${NC}
 # The example flashcard deck to be made
 DECK_TEMPLATE="History:When was the declaration of independence signed?:1776:0
 Math:What is the square root of 4?:2:4
-Science:What is the charge of a proton?:Positive:2
-Philosophy:What was socrates known as?:The Gadfly of Athens:0
-Programming:What is the typical starting value of an array?:0:5
-History:What did Abraham Lincoln Typically Keep In his hat?:Mail:0
-Math:what is the first 2 decimal places of PI:3.14:4
-Science:What is the charge of an electron?:Negative:3
+Science:What is the charge on a proton?:Positive 1:2
+Philosophy:What was Socrates known as?:The Gadfly of Athens:0
+Programming:What is the typical starting index of an array?:0:5
+History:What did Abraham Lincoln typically keep in his hat?:Mail:0
+Math:What is the value of PI to 2 decimal places?:3.14:4
+Science:What is the charge on an electron?:Negative 1:3
 Programming:What does OOP stand for?:Object Oriented Programming:2
-History:What did socrates drink to commit suicide?:Hemlock Tea:2
-Math:What is the equation for a slope of a line?:y=mx+b:4
-Science:What is the charge of a neutron?:Neutral:1
+History:What did Socrates drink to commit suicide?:Hemlock Tea:2
+Math:What is the general equation for the slope of a line?:y=mx+b:4
+Science:What is the charge on a neutron?:Neutral:1
 Programming:What is Vim?:God's Text Editor:999
-History:What were the british known buy during the american revolution?:The redcoats:1
+History:What were the British known by during the American Revolution?:The Redcoats:1
 Math:What is the value of this equation - log10(100)?:2:0
-Science:What are protons/neutrons/electrons made of?:quarks:5
+Science:What are protons and neutrons made of?:quarks:5
 Programming:What does RAM stand for?:Random Access Memory:1
 History:What was the year 2000 also known as?:Y2K:0
-Math:What is the formula for mean?:Sum/count:4
+Math:What is the formula for the mean?:Sum/count:4
 Science:What is cold?:The absense of heat:3
 Programming:What languages are the worst?:Proprietary:999
 History:When did man land on the moon?:1969:4
 Math:10^3=?:1000:1
 Science:The _____ ______ Project mapped all of man's genes.:Human Genome:3
 Programming:What is the best computer to program on?:Thinkpad:999
-History:When was flash.sh created?:April 2020:999
+History:When was fla.sh created?:April 2020:999
 Math:What do you call a number only divisible by itself and 1?:Prime:0
 Science:What is the distance between the Earth and Sol called?:An Astronomical Unit (AU):1
-Programming:Best operating system?:Arch, because BTW i run Arch:999"
+Programming:What is the best operating system?:Arch, because BTW i run Arch:999"
 
 setup(){ mkdir "$DIR" && eval touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"}  && echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" ;}
 

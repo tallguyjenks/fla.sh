@@ -48,8 +48,8 @@
     OS="$(uname)"
     case "$OS" in
         "Darwin") DIR="$HOME/Library/Application Support/flash" ;;
-        "Linux") DIR="$HOME/.local/share/flash" ;;
-        *) DIR="$HOME/.local/share/flash" ;;
+        "Linux") DIR="${XDG_DATA_HOME:-$HOME/.local/share}/flash" ;;
+        *) DIR="${XDG_DATA_HOME:-$HOME/.local/share}/flash" ;;
     esac
 # Where the example deck will be placed and named
     EXAMPLE_DECK="$DIR/deck.csv"
@@ -166,7 +166,7 @@ main(){
     echo -e ""
     echo -e "${LGREY}Press [Enter] to continue...${NC}"
     read -sn 1 NEXT
-    while [ ! "$NEXT" = "" ]; do
+    while [ ! "$NEXT" = "" ] && [ ! "$NEXT" = q ] && [ ! "$NEXT" = Q ]; do
         read -sn 1 NEXT
     done
     clear
@@ -179,7 +179,7 @@ main(){
     echo -e "${LGREY}Question:${NC}\n\t\t${q[1]}"
     echo -e ""
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
-        add_usage_entry && cd "$PWD" && exit
+        add_usage_entry && cd "$PWD" && clear && exit
     fi
     echo -e "${LGREY}Answer:${NC}\n\t\t${q[2]}"
     echo -e ""

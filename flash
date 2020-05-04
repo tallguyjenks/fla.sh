@@ -104,7 +104,13 @@ Math:What do you call a number only divisible by itself and 1?:Prime:0
 Science:What is the distance between the Earth and Sol called?:An Astronomical Unit (AU):1
 Programming:What is the best operating system?:Arch, because BTW i run Arch:999"
 
-setup(){ mkdir "$DIR" && eval touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"}  && echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK" && echo -e "$DIR_MADE_MSG" ;}
+# Define setup process in a function and create necessary files for user
+setup(){\
+    mkdir "$DIR" && \
+    eval touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} && \
+    echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK" && \
+    echo -e "$DIR_MADE_MSG" \
+;}
 
 # Test if .local/share exists and wether to offer setup process
 if [ ! -d "$DIR" ];then
@@ -117,10 +123,11 @@ if [ ! -d "$DIR" ];then
         esac
 fi
 
-# go to the flashcard decks
+# go to the flashcard decks directory
     cd "$DIR"
 
 # If there are no flashcard decks available return user to starting location
+# while also displaying explanatory text of issue
 if [ $(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l) = 0 ]; then
     echo -e "$NO_DECKS" && cd "$PWD" && exit
 fi
@@ -138,7 +145,9 @@ fi
 # Show pretty FZF preview of decks using BAT
     DECK=$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')
 
-# If no deck is selected in fzf menu, return user to start location and exit
+# If no deck is selected in fzf menu
+# return user to start location
+# and exit quietly
 if [ -z "$DECK" ]; then
     cd "$PWD" && exit
 fi
@@ -148,20 +157,17 @@ main(){
     clear
     echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}"
     echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER"
-    echo -e "    ${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat $HIGH_SCORE)"
-    echo -e "    ${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' $REVIEW_LOG)"
+    echo -e "\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat $HIGH_SCORE)"
+    echo -e "\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' $REVIEW_LOG)"
     echo -e ""
-    echo -e "${LGREY}Category:${NC}
-        ${q[0]}"
-    echo -e "${LGREY}Question:${NC}
-        ${q[1]}"
+    echo -e "${LGREY}Category:${NC}\n\t\t${q[0]}"
+    echo -e "${LGREY}Question:${NC}\n\t\t${q[1]}"
     echo -e ""
     read -sn 1 NEXT
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
         add_usage_entry && cd "$PWD" && exit
     fi
-    echo -e "${LGREY}Answer:${NC}
-        ${q[2]}"
+    echo -e "${LGREY}Answer:${NC}\n\t\t${q[2]}"
     echo -e ""
     echo -e "${WHITEBG}${WHITE}===========================================================${NC}"
     echo -e ""

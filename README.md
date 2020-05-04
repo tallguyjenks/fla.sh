@@ -40,7 +40,7 @@ Untested, not sure if this script and its dependencies will work with WSL or not
 
 ### Mac
 
-Untested, but looking for help in testing see [#11](https://github.com/tallguyjenks/fla.sh/issues/11)
+Currently testing see [#11](https://github.com/tallguyjenks/fla.sh/issues/11)
 
 ### Linux
 
@@ -70,7 +70,7 @@ If you would like to browse a collection of decks readily available in your subj
 
 ## Media (accepting contributions)
 
-- [(OLD)Fla.sh Plain Text Flashcards in your Terminal](https://www.youtube.com/watch?v=DbakjEAc_MU)
+- [Fla.sh Plain Text Flashcards in your Terminal](https://www.youtube.com/watch?v=DbakjEAc_MU)
 - [Flash Cards In Your Terminal With Fla.sh](https://www.youtube.com/watch?v=KEWhOzDCfLg)
 - [Fla.sh++ A Comprehensive Walk Through of My Bash Flashcard Script Project](https://www.youtube.com/watch?v=nPNPXEh6BUA)
 - [Even Exam Prep Can Be Done From The Terminal With Fla.sh](https://www.youtube.com/watch?v=RJ094P7wxaU)

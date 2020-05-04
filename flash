@@ -163,7 +163,21 @@ main(){
     echo -e "${LGREY}Category:${NC}\n\t\t${q[0]}"
     echo -e "${LGREY}Question:${NC}\n\t\t${q[1]}"
     echo -e ""
+    echo -e ""
+    echo -e "${LGREY}Press [Enter] to continue...${NC}"
     read -sn 1 NEXT
+    while [ ! "$NEXT" = "" ]; do
+        read -sn 1 NEXT
+    done
+    clear
+    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}"
+    echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER"
+    echo -e "\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat $HIGH_SCORE)"
+    echo -e "\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' $REVIEW_LOG)"
+    echo -e ""
+    echo -e "${LGREY}Category:${NC}\n\t\t${q[0]}"
+    echo -e "${LGREY}Question:${NC}\n\t\t${q[1]}"
+    echo -e ""
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
         add_usage_entry && cd "$PWD" && exit
     fi
@@ -175,6 +189,7 @@ main(){
     echo -e ""
     echo -e "${LRED}Hard${NC} [1]   ${RED}Difficult${NC} [2]   ${YELLOW}Normal${NC} [3]   ${GREEN}Mild${NC} [4]   ${LGREEN}Easy${NC} [5]"
     echo -e ""
+    echo -e "${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${NC}"
     read -sn 1 DIFFICULTY_SCORE
     if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then
         add_usage_entry && cd "$PWD" && exit

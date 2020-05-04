@@ -191,6 +191,9 @@ main(){
     echo -e ""
     echo -e "${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${NC}"
     read -sn 1 DIFFICULTY_SCORE
+    while [[ ! "$DIFFICULTY_SCORE" =~ [12345qQ] ]]; do
+        read -sn 1 DIFFICULTY_SCORE
+    done
     if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then
         add_usage_entry && cd "$PWD" && exit
     fi

@@ -196,11 +196,11 @@ main(){
         read -sn 1 DIFFICULTY_SCORE
     done
     if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then
-        add_usage_entry && cd "$PWD" && exit
+        add_usage_entry && cd "$PWD" && clear && exit
     fi
     clear
 
-    COUNTER="$(($COUNTER+1))" # Increment count for card review count increment
+    COUNTER="$((COUNTER+1))" # Increment count for card review count increment
 
     if [ "${q[3]}" = 0 ]; then
         NEW_ITEM_SCORE=0
@@ -222,11 +222,11 @@ main(){
         esac
     else
         case "$DIFFICULTY_SCORE" in
-            1) NEW_ITEM_SCORE="$((${q[3]}-2))" ;;#HARD
-            2) NEW_ITEM_SCORE="$((${q[3]}-1))" ;;#DIFFICULTY
+            1) NEW_ITEM_SCORE="$((q[3]-2))" ;;#HARD
+            2) NEW_ITEM_SCORE="$((q[3]-1))" ;;#DIFFICULTY
             3) NEW_ITEM_SCORE="${q[3]}" ;;#NORMAL
-            4) NEW_ITEM_SCORE="$((${q[3]}+1))" ;;#MILD
-            5) NEW_ITEM_SCORE="$((${q[3]}+2))" ;;#EASY
+            4) NEW_ITEM_SCORE="$((q[3]+1))" ;;#MILD
+            5) NEW_ITEM_SCORE="$((q[3]+2))" ;;#EASY
             *) NEW_ITEM_SCORE="${q[3]}" ;;#INVALID
         esac
     fi
@@ -234,12 +234,12 @@ main(){
     # Update item score for each flashcard item
     sed -i "s/${q[0]}:${q[1]}:${q[2]}:${q[3]}/${q[0]}:${q[1]}:${q[2]}:$NEW_ITEM_SCORE/g" "$DECK"
     # If no highscore currently set, set it.
-    if [ -z "$(cat $HIGH_SCORE)" ]; then
+    if [ -z "$(cat "$HIGH_SCORE")" ]; then
         echo "$COUNTER" > "$HIGH_SCORE"
     fi
 
     # If Cards Reviewed > Current High Score, Update
-    if [ "$COUNTER" -gt "$(cat $HIGH_SCORE)" ]; then
+    if [ "$COUNTER" -gt "$(cat "$HIGH_SCORE")" ]; then
         echo "$COUNTER" > "$HIGH_SCORE"
     fi
 
@@ -248,8 +248,8 @@ main(){
 add_usage_entry(){
     if [ ! "$COUNTER" = 0 ]; then
         # Create a New Entry
-        TIME_STAMP="$(date --rfc-3339=seconds)"
-        REVIEWED_DECK="$(echo $EXAMPLE_DECK | awk -F/ '{print $7}')"
+        TIME_STAMP=$(date --rfc-3339=seconds)
+        REVIEWED_DECK="$(echo "$EXAMPLE_DECK" | awk -F/ '{print $7}')"
         printf -v ENTRY "TimeStamp: %s Deck: %s cardsReviewed: %s" "$TIME_STAMP" "$REVIEWED_DECK" "$COUNTER"
         echo "$ENTRY" >> "$REVIEW_LOG"
     fi

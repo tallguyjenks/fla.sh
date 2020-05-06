@@ -33,7 +33,6 @@
     YELLOW='\033[1;33m'
     GREEN='\033[0;32m'
     LGREEN='\033[1;32m'
-    BLUE='\033[0;34m'
     LBLUE='\033[1;34m'
     CYAN='\033[0;36m'
     LCYAN='\033[1;36m'
@@ -150,11 +149,11 @@ if [ ! -e "$REVIEW_LOG" ]; then
 fi
 
 print_usage() {
-    printf "\n${LCYAN}fla.sh --- Flash card system by Bryan Jenks${NC} ${LBLUE}<BryanJenks@protonmail.com>${NC}\n\n${YELLOW}${BOLD}Usage:${NC}\n\t${GREEN}flash -h:${NC} Print this help text\n\t${GREEN}flash -i:${NC} Print Information about the flashcard system\n\t${GREEN}flash -v:${NC} Print version Number\n\n"
+    echo -e "\n${LCYAN}fla.sh --- Flash card system by Bryan Jenks${NC} ${LBLUE}<BryanJenks@protonmail.com>${NC}\n\n${YELLOW}${BOLD}Usage:${NC}\n\t${GREEN}flash -h:${NC} Print this help text\n\t${GREEN}flash -i:${NC} Print Information about the flashcard system\n\t${GREEN}flash -v:${NC} Print version Number\n\n"
 }
 
 print_info() {
-printf "\nThis flash card system works via colon ${YELLOW}:${NC} seperated ${YELLOW}.csv${NC} files\n
+echo -e "\nThis flash card system works via colon ${YELLOW}:${NC} seperated ${YELLOW}.csv${NC} files\n
 with entries that look like this: ${LGREY}category:question:answer:0${NC}\n
 These ${YELLOW}.csv${NC} files should be stored in your
 

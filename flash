@@ -116,6 +116,7 @@ setup(){\
 # Test if .local/share exists and wether to offer setup process
 if [ ! -d "$DIR" ];then
     echo -e "No ${LRED}$DIR${NC} directory, make it? ${LGREEN}Y${NC}/${LRED}N${NC}"
+    # shellcheck disable=SC2162
     read RESPONSE
         case "$RESPONSE" in
             [QqNn]) exit ;;
@@ -125,11 +126,11 @@ if [ ! -d "$DIR" ];then
 fi
 
 # go to the flashcard decks directory
-    cd "$DIR"
+    cd "$DIR" || exit
 
 # If there are no flashcard decks available return user to starting location
 # while also displaying explanatory text of issue
-if [ $(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l) = 0 ]; then
+if [ "$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l)" = 0 ]; then
     echo -e "$NO_DECKS" && cd "$PWD" && exit
 fi
 
@@ -144,7 +145,7 @@ if [ ! -e "$REVIEW_LOG" ]; then
 fi
 
 # Show pretty FZF preview of decks using BAT
-    DECK=$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')
+    DECK="$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
 
 # If no deck is selected in fzf menu
 # return user to start location
@@ -154,27 +155,31 @@ if [ -z "$DECK" ]; then
 fi
 
 main(){
-    IFS=$':'; read -a q <<<$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)
+    IFS=$':'
+    # shellcheck disable=SC2162
+    read -a q <<< "$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)"
     clear
     echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}"
     echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER"
-    echo -e "\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat $HIGH_SCORE)"
-    echo -e "\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' $REVIEW_LOG)"
+    echo -e "\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")"
+    echo -e "\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")"
     echo -e ""
     echo -e "${LGREY}Category:${NC}\n\t\t${q[0]}"
     echo -e "${LGREY}Question:${NC}\n\t\t${q[1]}"
     echo -e ""
     echo -e ""
     echo -e "${LGREY}Press [Enter] to continue...${NC}"
+    # shellcheck disable=SC2162
     read -sn 1 NEXT
     while [ ! "$NEXT" = "" ] && [ ! "$NEXT" = q ] && [ ! "$NEXT" = Q ]; do
+        # shellcheck disable=SC2162
         read -sn 1 NEXT
     done
     clear
     echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}"
     echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER"
-    echo -e "\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat $HIGH_SCORE)"
-    echo -e "\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' $REVIEW_LOG)"
+    echo -e "\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")"
+    echo -e "\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")"
     echo -e ""
     echo -e "${LGREY}Category:${NC}\n\t\t${q[0]}"
     echo -e "${LGREY}Question:${NC}\n\t\t${q[1]}"
@@ -191,8 +196,10 @@ main(){
     echo -e "${LRED}Hard${NC} [1]   ${RED}Difficult${NC} [2]   ${YELLOW}Normal${NC} [3]   ${GREEN}Mild${NC} [4]   ${LGREEN}Easy${NC} [5]"
     echo -e ""
     echo -e "${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${NC}"
+    # shellcheck disable=SC2162
     read -sn 1 DIFFICULTY_SCORE
     while [[ ! "$DIFFICULTY_SCORE" =~ [12345qQ] ]]; do
+        # shellcheck disable=SC2162
         read -sn 1 DIFFICULTY_SCORE
     done
     if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then

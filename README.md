@@ -6,6 +6,7 @@
 <!-- Shields -->
 <p align="center">
 <a href="https://github.com/tallguyjenks/fla.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
+[![Build Status](https://travis-ci.org/tallguyjenks/fla.sh.svg?branch=master)](https://travis-ci.org/tallguyjenks/fla.sh)
 <a href="https://github.com/tallguyjenks/fla.sh/releases/tag/v1.0"><img src="https://img.shields.io/github/downloads/tallguyjenks/fla.sh/v1.0/total?label=Downloads"></a>
 <img src="https://img.shields.io/github/commit-activity/m/tallguyjenks/fla.sh">
 <a href="https://github.com/tallguyjenks/fla.sh/graphs/contributors"><img src="https://img.shields.io/github/contributors/tallguyjenks/fla.sh"></a>

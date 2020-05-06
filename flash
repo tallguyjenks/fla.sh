@@ -160,7 +160,7 @@ while getopts 'hiv' flag; do
   case "${flag}" in
     h) print_usage && exit ;;
     i) a_flag='true' ;;
-    v) b_flag='true' ;;
+    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.0${NC}\n" && exit ;;
     *) print_usage && exit 1 ;;
   esac
 done

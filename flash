@@ -149,18 +149,58 @@ if [ ! -e "$REVIEW_LOG" ]; then
     touch "$REVIEW_LOG"
 fi
 
-a_flag=''
-b_flag=''
-
 print_usage() {
-  printf "\n${LCYAN}fla.sh --- Flash card system by Bryan Jenks${NC} ${LBLUE}<BryanJenks@protonmail.com>${NC}\n\n${YELLOW}${BOLD}Usage:${NC}\n\t${GREEN}flash -h:${NC} Print this help text\n\t${GREEN}flash -i:${NC} Print Information about the flashcard system\n\t${GREEN}flash -v:${NC} Print version Number\n\n"
+    printf "\n${LCYAN}fla.sh --- Flash card system by Bryan Jenks${NC} ${LBLUE}<BryanJenks@protonmail.com>${NC}\n\n${YELLOW}${BOLD}Usage:${NC}\n\t${GREEN}flash -h:${NC} Print this help text\n\t${GREEN}flash -i:${NC} Print Information about the flashcard system\n\t${GREEN}flash -v:${NC} Print version Number\n\n"
+}
+
+print_info() {
+printf "\nThis flash card system works via colon ${YELLOW}:${NC} seperated ${YELLOW}.csv${NC} files\n
+with entries that look like this: ${LGREY}category:question:answer:0${NC}\n
+These ${YELLOW}.csv${NC} files should be stored in your
+
+\t${YELLOW}\$XDG_DATA_HOME/flash${NC}
+OR
+\t${YELLOW}~/.local/share/flash${NC} for Linux
+\t${YELLOW}~/Library/Application Support/flash${NC} for mac
+-------------------------------------------------------------------------------
+${LCYAN}Exiting:${NC}\n
+\tYou can exit the application at any time by pressing either ${RED}q${NC} or ${RED}Q${NC}
+
+${LCYAN}Usage:${NC}\n
+\tYou will first be prompted with a question and will need to press ${RED}[Enter]${NC}
+\tto reveal the answer. Once the answer is revealed you will need to either
+\tquit, or give a rating to how difficult the question was.
+
+${LCYAN}The Scoring System:${NC}\n
+\tThe last field in the ${YELLOW}.csv${NC} files is the current point score of the 'card'
+\tEvery time you rate a card the point score will either increase, decrease,
+\tor stay the same. zero is the lowest value, and the upper limit is over
+\t100 billion.
+
+\t${CYAN}Scoring Results:${NC}
+\t\t[${LRED}Hard${NC}]\t\t-2 points
+\t\t[${RED}Difficult${NC}]\t-1 point
+\t\t[${YELLOW}Normal${NC}]\tNo Change
+\t\t[${GREEN}Mild${NC}]\t\t+1 point
+\t\t[${LGREEN}Easy${NC}]\t\t+2 points
+
+\tThe cards with the lowest scores (you scored them as ${LRED}Hard${NC}/${RED}Difficult${NC}) are
+\tsorted to the top, a pool of them are picked and from that pool 1 card is
+\trandomly drawn. As you become more familair with the material and rate it
+\tas easier, the point values will go up and the cards will appear less
+\tfrequently making room for those cards that are still difficult and have
+\tlower point values.
+
+    It is a good idea to start all cards off at ${YELLOW}0${NC} initially so that they all
+    have an equal chance of being drawn initially.
+"
 }
 
 while getopts 'hiv' flag; do
   case "${flag}" in
     h) print_usage && exit ;;
-    i) a_flag='true' ;;
-    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.0${NC}\n" && exit ;;
+    i) print_info && exit ;;
+    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit ;;
     *) print_usage && exit 1 ;;
   esac
 done

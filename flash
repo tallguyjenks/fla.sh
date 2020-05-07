@@ -52,7 +52,7 @@
 # Prefer XDG Configuration before hard coded file paths
     OS="$(uname)"
     case "$OS" in
-        "Darwin") DIR="${XDG_DATA_HOME:-$HOME/Library/Application Support}/flash" ;;
+        "Darwin") DIR="${XDG_DATA_HOME:-$HOME/Library/Application Support}/flash" && alias shuf=gshuf ;;
         "Linux") DIR="${XDG_DATA_HOME:-$HOME/.local/share}/flash" ;;
         *) DIR="${XDG_DATA_HOME:-$HOME/.local/share}/flash" ;;
     esac

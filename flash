@@ -114,8 +114,7 @@ setup(){\
     mkdir "$DIR" && \
     eval touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} && \
     echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK" && \
-    echo -e "$DIR_MADE_MSG" \
-;}
+    echo -e "$DIR_MADE_MSG" ;}
 
 # Test if .local/share exists and wether to offer setup process
 if [ ! -d "$DIR" ];then

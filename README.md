@@ -11,8 +11,6 @@
 <img src="https://img.shields.io/github/commit-activity/m/tallguyjenks/fla.sh">
 <a href="https://github.com/tallguyjenks/fla.sh/graphs/contributors"><img src="https://img.shields.io/github/contributors/tallguyjenks/fla.sh"></a>
 <img src="https://img.shields.io/github/v/release/tallguyjenks/fla.sh">
-  
-
 </p>
 
 <!-- Description -->
@@ -48,6 +46,10 @@ Currently testing see [#11](https://github.com/tallguyjenks/fla.sh/issues/11)
 ### Linux
 
 To utilize this script copy/move it to your `~/.local/bin/` folder or any place in your `$PATH`
+
+## Troubleshooting
+
+> Common issues will be added here as they arise during the stability stage of this script.
 
 ## Usage
 

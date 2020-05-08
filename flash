@@ -68,6 +68,8 @@
 DIR_MADE_MSG="
 Your ${LRED}$DIR${NC} directory has been made and
 your ${ORANGE}deck.csv${NC} file is ready for you to enter your flashcard data
+If you want to see information about ${ORANGE}fla.sh${NC} then use the option
+${YELLOW}flash -i${NC}.
 "
 # User has .local/share directory but no decks inside
 NO_DECKS="

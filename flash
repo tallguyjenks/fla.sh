@@ -221,16 +221,16 @@ main(){
     # shellcheck disable=SC2162
     read -a q <<< "$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)"
     clear
-    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}"
-    echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER"
-    echo -e "\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")"
-    echo -e "\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")"
-    echo -e ""
-    echo -e "${LGREY}Category:${NC}\n\t\t${q[0]}"
-    echo -e "${LGREY}Question:${NC}\n\t\t${q[1]}"
-    echo -e ""
-    echo -e ""
-    echo -e "${LGREY}Press [Enter] to continue...${NC}"
+    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
+${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
+\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")
+\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")
+
+${LGREY}Category:${NC}\n\t\t${q[0]}
+${LGREY}Question:${NC}\n\t\t${q[1]}
+
+
+${LGREY}Press [Enter] to continue...${NC}"
     # shellcheck disable=SC2162
     read -sn 1 NEXT
     while [ ! "$NEXT" = "" ] && [ ! "$NEXT" = q ] && [ ! "$NEXT" = Q ]; do
@@ -238,26 +238,26 @@ main(){
         read -sn 1 NEXT
     done
     clear
-    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}"
-    echo -e "${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER"
-    echo -e "\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")"
-    echo -e "\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")"
-    echo -e ""
-    echo -e "${LGREY}Category:${NC}\n\t\t${q[0]}"
-    echo -e "${LGREY}Question:${NC}\n\t\t${q[1]}"
-    echo -e ""
+    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
+${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
+\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")
+\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")
+
+${LGREY}Category:${NC}\n\t\t${q[0]}
+${LGREY}Question:${NC}\n\t\t${q[1]}
+"
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
         add_usage_entry && cd "$PWD" && clear && exit
     fi
-    echo -e "${LGREY}Answer:${NC}\n\t\t${q[2]}"
-    echo -e ""
-    echo -e "${WHITEBG}${WHITE}===========================================================${NC}"
-    echo -e ""
-    echo -e "${LGREY}How Difficult Was This Question?${NC}"
-    echo -e ""
-    echo -e "${LRED}Hard${NC} [1]   ${RED}Difficult${NC} [2]   ${YELLOW}Normal${NC} [3]   ${GREEN}Mild${NC} [4]   ${LGREEN}Easy${NC} [5]"
-    echo -e ""
-    echo -e "${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${NC}"
+    echo -e "${LGREY}Answer:${NC}\n\t\t${q[2]}
+
+${WHITEBG}${WHITE}===========================================================${NC}
+
+${LGREY}How Difficult Was This Question?${NC}
+
+${LRED}Hard${NC} [1]   ${RED}Difficult${NC} [2]   ${YELLOW}Normal${NC} [3]   ${GREEN}Mild${NC} [4]   ${LGREEN}Easy${NC} [5]
+
+${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${NC}"
     # shellcheck disable=SC2162
     read -sn 1 DIFFICULTY_SCORE
     while [[ ! "$DIFFICULTY_SCORE" =~ [12345qQ] ]]; do

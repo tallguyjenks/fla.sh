@@ -114,7 +114,7 @@ Programming:What is the best operating system?:Arch, because BTW i run Arch:999"
 # Define setup process in a function and create necessary files for user
 setup(){\
     mkdir "$DIR" && \
-    eval touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} && \
+    touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} && \
     echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK" && \
     echo -e "$DIR_MADE_MSG" ;}
 

@@ -29,6 +29,7 @@ This script uses:
 
 - [fzf](https://github.com/junegunn/fzf)
 - [bat](https://github.com/sharkdp/bat)
+- (if on macOS the GNU core utilities are a dependency (namely the `shuf` utility)
 
 Install these prior to running the script.
 
@@ -40,7 +41,9 @@ Untested, not sure if this script and its dependencies will work with WSL or not
 
 ### Mac
 
-Currently testing see [#11](https://github.com/tallguyjenks/fla.sh/issues/11)
+Will need to have `brew` to install dependencies listed below and also `brew install coreutils` to get the GNU core utilities as `shuf` is not in macOS by default.
+
+Confirmed to work on macOS 10.14.6 more recent version welcome to test and file an issue/pull request to update README if other versions run the script as it should.
 
 ### Linux
 

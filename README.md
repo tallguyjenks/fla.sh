@@ -7,7 +7,6 @@
 <p align="center">
 <a href="https://github.com/tallguyjenks/fla.sh/blob/master/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=flat&label=License&message=MIT&logoColor=eceff4&logo=github&colorA=black&colorB=green"/></a>
 <a href="https://img.shields.io/travis/tallguyjenks/fla.sh/master"><img src="https://img.shields.io/travis/tallguyjenks/fla.sh/master"></a>
-<a href="https://github.com/tallguyjenks/fla.sh/releases/tag/v1.0"><img src="https://img.shields.io/github/downloads/tallguyjenks/fla.sh/v1.0/total?label=Downloads"></a>
 <img src="https://img.shields.io/github/commit-activity/m/tallguyjenks/fla.sh">
 <a href="https://github.com/tallguyjenks/fla.sh/graphs/contributors"><img src="https://img.shields.io/github/contributors/tallguyjenks/fla.sh"></a>
 <img src="https://img.shields.io/github/v/release/tallguyjenks/fla.sh">
@@ -30,6 +29,7 @@ This script uses:
 
 - [fzf](https://github.com/junegunn/fzf)
 - [bat](https://github.com/sharkdp/bat)
+- (if on macOS the GNU core utilities are a dependency (namely the `shuf` utility)
 
 Install these prior to running the script.
 
@@ -41,7 +41,9 @@ Untested, not sure if this script and its dependencies will work with WSL or not
 
 ### Mac
 
-Currently testing see [#11](https://github.com/tallguyjenks/fla.sh/issues/11)
+Will need to have `brew` to install dependencies listed below and also `brew install coreutils` to get the GNU core utilities as `shuf` is not in macOS by default.
+
+Confirmed to work on macOS 10.14.6 more recent version welcome to test and file an issue/pull request to update README if other versions run the script as it should.
 
 ### Linux
 

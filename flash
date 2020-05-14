@@ -26,6 +26,7 @@
 # USER CUSTOMIZABLE VARIABLES
     CARD_POOL_SIZE=10 # How large the pool size is for shuf to draw from
     SEARCH_DEPTH=999  # How many levels to recursively search for .csv's in .local/share/flash
+    PREVIEWER='bat'   # What fzf previewer to use when searching through decks
 
 # ANSI FOREGROUND ESCAPE COLORS
     RED='\033[0;31m'
@@ -196,18 +197,28 @@ ${LCYAN}The Scoring System:${NC}\n
 "
 }
 
-while getopts 'hiv' flag; do
+while getopts 'hivp:' flag; do
   case "${flag}" in
     h) print_usage && exit ;;
     i) print_info && exit ;;
     v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit ;;
+    p) [[ $(command -v $OPTARG 2>&1) ]] && PREVIEWER=$OPTARG || { echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ; } ;;
     *) print_usage && exit 1 ;;
   esac
 done
 
 
-# Show pretty FZF preview of decks using BAT
-    DECK="$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview='bat --theme="Solarized (dark)" --style=numbers --color=always {} | head -500')"
+# Set some parameters for preview command used by FZF
+while [[ -z $PREVIEWER_PARAMTERS ]]; do
+  case $PREVIEWER in
+    bat) PREVIEWER_PARAMTERS="--theme='Solarized (dark)' --style=numbers --color=always" ;;
+    cat) PREVIEWER_PARAMTERS="--number" ;;
+    *)   echo -e "$PREVIEWER is not a valid previewer. Use 'bat' or 'cat'. Falling back on default..." && sleep 1 && PREVIEWER='bat' ;;
+  esac
+done
+
+# Show pretty FZF preview of decks using $PREVIEWER. Default: BAT
+    DECK="$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview="$PREVIEWER $PREVIEWER_PARAMTERS {} | head -500")"
 
 # If no deck is selected in fzf menu
 # return user to start location

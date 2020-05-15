@@ -28,8 +28,8 @@ You can have as many 'decks' in the `flash` directory as you want, and having di
 This script uses:
 
 - [fzf](https://github.com/junegunn/fzf)
-- [bat](https://github.com/sharkdp/bat)
-- (if on macOS the GNU core utilities are a dependency (namely the `shuf` utility)
+- [bat](https://github.com/sharkdp/bat) (optional if you use `flash -p cat` to use the core utility instead of `bat`)
+- (if on macOS the GNU core utilities are a dependency (namely the `shuf` utility))
 
 Install these prior to running the script.
 
@@ -43,6 +43,8 @@ Untested, not sure if this script and its dependencies will work with WSL or not
 
 Will need to have `brew` to install dependencies listed below and also `brew install coreutils` to get the GNU core utilities as `shuf` is not in macOS by default.
 
+You will need to put the script itself somewhere in your `$PATH` and execute it to initialize setup.
+
 Confirmed to work on macOS 10.14.6 more recent version welcome to test and file an issue/pull request to update README if other versions run the script as it should.
 
 ### Linux
@@ -52,6 +54,12 @@ To utilize this script copy/move it to your `~/.local/bin/` folder or any place 
 ## Troubleshooting
 
 > Common issues will be added here as they arise during the stability stage of this script.
+
+Checks:
+
+- Is your system supported? see above
+- Are all necessary dependencies installed?
+- what version of bash do you have installed? or do you have bash installed?
 
 ## Usage
 

@@ -209,11 +209,11 @@ done
 
 
 # Set some parameters for preview command used by FZF
-while [[ -z $PREVIEWER_PARAMTERS ]]; do
-  case $PREVIEWER in
+while [ -z "$PREVIEWER_PARAMTERS" ]; do
+  case "$PREVIEWER" in
     bat) PREVIEWER_PARAMTERS="--theme='Solarized (dark)' --style=numbers --color=always" ;;
     cat) PREVIEWER_PARAMTERS="--number" ;;
-    *)   echo -e "$PREVIEWER is not a valid previewer. Use 'bat' or 'cat'. Falling back on default..." && read -r -s -p 'Press [Enter] to continue...' && PREVIEWER='bat' ;;
+    *)   echo -e "$PREVIEWER is not a valid previewer. Use 'bat' or 'cat'. Falling back on default...\n" && read -r -s -p 'Press [Enter] to continue...' && PREVIEWER='bat' ;;
   esac
 done
 

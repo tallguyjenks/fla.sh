@@ -151,7 +151,7 @@ if [ ! -e "$REVIEW_LOG" ]; then
 fi
 
 print_usage() {
-    echo -e "\n${LCYAN}fla.sh --- Flash card system by Bryan Jenks${NC} ${LBLUE}<BryanJenks@protonmail.com>${NC}\n\n${YELLOW}${BOLD}Usage:${NC}\n\t${GREEN}flash -h:${NC} Print this help text\n\t${GREEN}flash -i:${NC} Print Information about the flashcard system\n\t${GREEN}flash -v:${NC} Print version Number\n\t${GREEN}flash -p [BINARY]:${NC} Change the previewer when selecting decks. Default: bat\n\t\tSupported: bat, cat\n"
+    echo -e "\n${LCYAN}fla.sh --- Flash card system by Bryan Jenks${NC} ${LBLUE}<BryanJenks@protonmail.com>${NC}\n\n${YELLOW}${BOLD}Usage:${NC}\n\t${GREEN}flash -h:${NC} Print this help text\n\t${GREEN}flash -i:${NC} Print Information about the flashcard system\n\t${GREEN}flash -v:${NC} Print version Number\n\t${GREEN}flash -p [BINARY]:${NC} Change the previewer when selecting decks.\n\t\tDefault: ${GREEN}bat${NC}\n\t\tSupported: ${GREEN}bat${NC}, ${GREEN}cat${NC}\n"
 }
 
 print_info() {

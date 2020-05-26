@@ -228,9 +228,8 @@ case "$CURR_DECK_DISPLAY" in
     *) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
 esac
 
-
+# The top part of the flash display so that code is not duplicated twice
 print_head(){
-
     echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
 ${ORANGE}${BOLD}  Current Deck:${BOLD}${NC}\t$CURRENT_DECK
 ${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
@@ -239,6 +238,17 @@ ${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
 
 ${LGREY}Category:${NC}\n\t\t${q[0]}
 ${LGREY}Question:${NC}\n\t\t${q[1]}"
+}
+
+# Creating new entries in the log for the average score generation
+add_usage_entry(){
+    if [ ! "$COUNTER" = 0 ]; then
+        # Create a New Entry
+        TIME_STAMP=$(date --rfc-3339=seconds)
+        REVIEWED_DECK="$(echo "$EXAMPLE_DECK" | awk -F/ '{print $7}')"
+        printf -v ENTRY "TimeStamp: %s Deck: %s cardsReviewed: %s" "$TIME_STAMP" "$REVIEWED_DECK" "$COUNTER"
+        echo "$ENTRY" >> "$REVIEW_LOG"
+    fi
 }
 
 # If no deck is selected in fzf menu
@@ -332,16 +342,6 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
         echo "$COUNTER" > "$HIGH_SCORE"
     fi
 
-}
-
-add_usage_entry(){
-    if [ ! "$COUNTER" = 0 ]; then
-        # Create a New Entry
-        TIME_STAMP=$(date --rfc-3339=seconds)
-        REVIEWED_DECK="$(echo "$EXAMPLE_DECK" | awk -F/ '{print $7}')"
-        printf -v ENTRY "TimeStamp: %s Deck: %s cardsReviewed: %s" "$TIME_STAMP" "$REVIEWED_DECK" "$COUNTER"
-        echo "$ENTRY" >> "$REVIEW_LOG"
-    fi
 }
 
 while true; do

@@ -229,7 +229,17 @@ case "$CURR_DECK_DISPLAY" in
 esac
 
 
+print_head(){
 
+    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
+${ORANGE}${BOLD}  Current Deck:${BOLD}${NC}\t$CURRENT_DECK
+${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
+\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")
+\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")
+
+${LGREY}Category:${NC}\n\t\t${q[0]}
+${LGREY}Question:${NC}\n\t\t${q[1]}"
+}
 
 # If no deck is selected in fzf menu
 # return user to start location
@@ -243,14 +253,8 @@ main(){
     # shellcheck disable=SC2162
     read -a q <<< "$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)"
     clear
-    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
-${ORANGE}${BOLD}  Current Deck:${BOLD}${NC}\t$CURRENT_DECK
-${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
-\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")
-\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")
-
-${LGREY}Category:${NC}\n\t\t${q[0]}
-${LGREY}Question:${NC}\n\t\t${q[1]}
+    print_head
+    echo -e "
 
 
 ${LGREY}Press [Enter] to continue...${NC}"
@@ -261,15 +265,7 @@ ${LGREY}Press [Enter] to continue...${NC}"
         read -sn 1 NEXT
     done
     clear
-    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
-${ORANGE}${BOLD}  Current Deck:${BOLD}${NC}\t$CURRENT_DECK
-${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
-\t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")
-\t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")
-
-${LGREY}Category:${NC}\n\t\t${q[0]}
-${LGREY}Question:${NC}\n\t\t${q[1]}
-"
+    print_head
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
         add_usage_entry && cd "$PWD" && clear && exit 0
     fi

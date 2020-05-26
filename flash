@@ -125,19 +125,19 @@ if [ ! -d "$DIR" ];then
     # shellcheck disable=SC2162
     read RESPONSE
         case "$RESPONSE" in
-            [QqNn]) exit ;;
-            [Yy]) setup && exit ;;
-            *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit ;;
+            [QqNn]) exit 0 ;;
+            [Yy]) setup && exit 0 ;;
+            *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit 1 ;;
         esac
 fi
 
 # go to the flashcard decks directory
-    cd "$DIR" || exit
+    cd "$DIR" || exit 1
 
 # If there are no flashcard decks available return user to starting location
 # while also displaying explanatory text of issue
 if [ "$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l)" = 0 ]; then
-    echo -e "$NO_DECKS" && cd "$PWD" && exit
+    echo -e "$NO_DECKS" && cd "$PWD" && exit 1
 fi
 
 # if highscore file was removed, remake it.
@@ -199,9 +199,9 @@ ${LCYAN}The Scoring System:${NC}\n
 
 while getopts 'hivp:' flag; do
   case "${flag}" in
-    h) print_usage && exit ;;
-    i) print_info && exit ;;
-    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit ;;
+    h) print_usage && exit 0 ;;
+    i) print_info && exit 0 ;;
+    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit 0 ;;
     p) if [[ $(command -v "$OPTARG" 2>&1) ]]; then PREVIEWER=$OPTARG; else echo "Unable to find previewer $OPTARG. Exiting..." && exit 1; fi ;;
     *) print_usage && exit 1 ;;
   esac
@@ -224,7 +224,7 @@ done
 # return user to start location
 # and exit quietly
 if [ -z "$DECK" ]; then
-    cd "$PWD" && exit
+    clear && cd "$PWD" && exit 1
 fi
 
 main(){
@@ -258,7 +258,7 @@ ${LGREY}Category:${NC}\n\t\t${q[0]}
 ${LGREY}Question:${NC}\n\t\t${q[1]}
 "
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
-        add_usage_entry && cd "$PWD" && clear && exit
+        add_usage_entry && cd "$PWD" && clear && exit 0
     fi
     echo -e "${LGREY}Answer:${NC}\n\t\t${q[2]}
 
@@ -276,7 +276,7 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
         read -sn 1 DIFFICULTY_SCORE
     done
     if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then
-        add_usage_entry && cd "$PWD" && clear && exit
+        add_usage_entry && cd "$PWD" && clear && exit 0
     fi
     clear
 

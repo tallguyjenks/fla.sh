@@ -24,9 +24,10 @@
 #==============================================================#
 
 # USER CUSTOMIZABLE VARIABLES
-    CARD_POOL_SIZE=10 # How large the pool size is for shuf to draw from
-    SEARCH_DEPTH=999  # How many levels to recursively search for .csv's in .local/share/flash
-    PREVIEWER='bat'   # What fzf previewer to use when searching through decks
+    CARD_POOL_SIZE=10 ######## How large the pool size is for shuf to draw from
+    SEARCH_DEPTH=999 ######### How many levels to recursively search for .csv's in .local/share/flash
+    PREVIEWER='bat' ########## What fzf previewer to use when searching through decks
+    CURR_DECK_DISPLAY="file" # Options are 'file' or 'path'
 
 # ANSI FOREGROUND ESCAPE COLORS
     RED='\033[0;31m'
@@ -221,7 +222,14 @@ done
     DECK="$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview="$PREVIEWER $PREVIEWER_PARAMTERS {} | head -500")"
 
 # Get current deck name for display
-CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')"
+case "$CURR_DECK_DISPLAY" in
+    file) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
+    path) CURRENT_DECK="$DECK" ;;
+    *) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
+esac
+
+
+
 
 # If no deck is selected in fzf menu
 # return user to start location

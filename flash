@@ -331,7 +331,10 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
     fi
 
     # Update item score for each flashcard item
-    sed -i "s/${q[0]}:${q[1]}:${q[2]}:${q[3]}/${q[0]}:${q[1]}:${q[2]}:$NEW_ITEM_SCORE/g" "$DECK"
+    ## Remove forward slashes in the Questions and answers
+    QUESTION_REGEX=$(sed "s/\(\/\|\[\|\]\)/\\\\\1/g" <<< ${q[1]})
+    ANSWER_REGEX=$(sed "s/\(\/\|\[\|\]\)/\\\\\1/g" <<< ${q[2]})
+    sed -i "s/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:${q[3]}/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:$NEW_ITEM_SCORE/g" "$DECK"
     # If no highscore currently set, set it.
     if [ -z "$(cat "$HIGH_SCORE")" ]; then
         echo "$COUNTER" > "$HIGH_SCORE"

@@ -240,7 +240,7 @@ ${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
 ${LGREY}Category:${NC} ${q[0]}
 ___________________________________________________________
 
-$(if [ ${#QUESTION} -lt 59 ]; then printf "%$(( ( 59 - ${#QUESTION} ) / 2 ))s"; fi)$QUESTION\n"
+$(if [ ${#QUESTION} -lt 59 ]; then printf "%$(( ( 59 - ${#QUESTION} ) / 2 ))s"; fi)$QUESTION"
 
 }
 

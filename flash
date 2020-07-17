@@ -230,14 +230,18 @@ esac
 
 # The top part of the flash display so that code is not duplicated twice
 print_head(){
-    echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
-${ORANGE}${BOLD}  Current Deck:${BOLD}${NC}\t$CURRENT_DECK
+    QUESTION=$(echo ${q[1]} | fold --spaces --width=59)
+    printf "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
+${ORANGE}${BOLD}  Current Deck:${BOLD}${NC}\t`basename -s .csv $CURRENT_DECK`
 ${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
 \t${ORANGE}${BOLD}High Score:${BOLD}${NC}\t$(cat "$HIGH_SCORE")
 \t${ORANGE}${BOLD}Avg review:${BOLD}${NC}\t$(awk '{ sum += $7; n++ } END { if (n > 0) print sum / n; }' "$REVIEW_LOG")
 
-${LGREY}Category:${NC}\n\t\t${q[0]}
-${LGREY}Question:${NC}\n\t\t${q[1]}"
+${LGREY}Category:${NC} ${q[0]}
+___________________________________________________________
+
+$(if [ ${#QUESTION} -lt 59 ]; then printf "%$(( ( 59 - ${#QUESTION} ) / 2 ))s"; fi)$QUESTION\n"
+
 }
 
 # Creating new entries in the log for the average score generation
@@ -265,9 +269,7 @@ main(){
     clear
     print_head
     echo -e "
-
-
-${LGREY}Press [Enter] to continue...${NC}"
+${LGREY}──────────────── Press [Enter] to continue ────────────────${NC}"
     # shellcheck disable=SC2162
     read -sn 1 NEXT
     while [ ! "$NEXT" = "" ] && [ ! "$NEXT" = q ] && [ ! "$NEXT" = Q ]; do
@@ -279,7 +281,10 @@ ${LGREY}Press [Enter] to continue...${NC}"
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
         add_usage_entry && cd "$PWD" && clear && exit 0
     fi
-    echo -e "${LGREY}Answer:${NC}\n\t\t${q[2]}
+    ANSWER=$(echo ${q[2]} | fold --spaces --width=59)
+    printf "___________________________________________________________
+
+$(if [ ${#ANSWER} -lt 59 ]; then printf "%$(( ( 59 - ${#ANSWER} ) / 2 ))s"; fi)$ANSWER
 
 ${WHITEBG}${WHITE}===========================================================${NC}
 
@@ -332,8 +337,8 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
 
     # Update item score for each flashcard item
     ## Remove forward slashes in the Questions and answers
-    QUESTION_REGEX=$(sed "s/\(\/\|\[\|\]\)/\\\\\1/g" <<< "${q[1]}")
-    ANSWER_REGEX=$(sed "s/\(\/\|\[\|\]\)/\\\\\1/g" <<< "${q[2]}")
+    QUESTION_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<< "${q[1]}")
+    ANSWER_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<< "${q[2]}")
     sed -i "s/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:${q[3]}/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:$NEW_ITEM_SCORE/g" "$DECK"
     # If no highscore currently set, set it.
     if [ -z "$(cat "$HIGH_SCORE")" ]; then

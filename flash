@@ -248,7 +248,7 @@ $(if [ ${#QUESTION} -lt 59 ]; then printf "%$(( ( 59 - ${#QUESTION} ) / 2 ))s"; 
 add_usage_entry(){
     if [ ! "$COUNTER" = 0 ]; then
         # Create a New Entry
-        TIME_STAMP=$(date --rfc-3339=seconds)
+        TIME_STAMP=$(date +"%Y%m%d %H:%M:%S")
         REVIEWED_DECK="$(echo "$EXAMPLE_DECK" | awk -F/ '{print $7}')"
         printf -v ENTRY "TimeStamp: %s Deck: %s cardsReviewed: %s" "$TIME_STAMP" "$REVIEWED_DECK" "$COUNTER"
         echo "$ENTRY" >> "$REVIEW_LOG"

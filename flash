@@ -251,7 +251,6 @@ add_usage_entry(){
     if [ ! "$COUNTER" = 0 ]; then
         # Create a New Entry
         TIME_STAMP=$(date +"%Y%m%d %H:%M:%S")
-        REVIEWED_DECK="$(echo "$EXAMPLE_DECK" | awk -F/ '{print $7}')"
         printf -v ENTRY "TimeStamp: %s Deck: %s cardsReviewed: %s" "$TIME_STAMP" "$CURRENT_DECK" "$COUNTER"
         echo "$ENTRY" >> "$REVIEW_LOG"
     fi

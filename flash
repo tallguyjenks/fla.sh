@@ -230,7 +230,7 @@ esac
 
 # The top part of the flash display so that code is not duplicated twice
 print_head(){
-    QUESTION=$(echo "${q[1]}" | fold --spaces --width=59)
+    QUESTION=$(echo "${q[1]}" | fold -w 59)
     echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
 ${ORANGE}${BOLD}  Current Deck:${BOLD}${NC}\t$(basename -s .csv "$CURRENT_DECK")
 ${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
@@ -281,7 +281,7 @@ ${LGREY}──────────────── Press [Enter] to contin
     if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
         add_usage_entry && cd "$PWD" && clear && exit 0
     fi
-    ANSWER=$(echo "${q[2]}" | fold --spaces --width=59)
+    ANSWER=$(echo "${q[2]}" | fold -w 59)
     echo -e "___________________________________________________________
 
 $(if [ ${#ANSWER} -lt 59 ]; then printf "%$(( ( 59 - ${#ANSWER} ) / 2 ))s"; fi)$ANSWER

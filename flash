@@ -138,19 +138,14 @@ cd "$DIR" || exit 1
 
 # If there are no flashcard decks available return user to starting location
 # while also displaying explanatory text of issue
-if [ "$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l)" = 0 ]; then
+[ "$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l)" = 0 ] &&
     echo -e "$NO_DECKS" && cd "$PWD" && exit 1
-fi
 
 # if highscore file was removed, remake it.
-if [ ! -e "$HIGH_SCORE" ]; then
-    touch "$HIGH_SCORE"
-fi
+[ ! -e "$HIGH_SCORE" ] && touch "$HIGH_SCORE"
 
 # if reviewed file was removed, remake it.
-if [ ! -e "$REVIEW_LOG" ]; then
-    touch "$REVIEW_LOG"
-fi
+[ ! -e "$REVIEW_LOG" ] && touch "$REVIEW_LOG"
 
 print_usage() {
     echo -e "\n${LCYAN}fla.sh --- Flash card system by Bryan Jenks${NC} ${LBLUE}<BryanJenks@protonmail.com>${NC}\n\n${YELLOW}${BOLD}Usage:${NC}\n\t${GREEN}flash -h:${NC} Print this help text\n\t${GREEN}flash -i:${NC} Print Information about the flashcard system\n\t${GREEN}flash -v:${NC} Print version Number\n\t${GREEN}flash -p [BINARY]:${NC} Change the previewer when selecting decks.\n\t\tDefault: ${GREEN}bat${NC}\n\t\tSupported: ${GREEN}bat${NC}, ${GREEN}cat${NC}\n"
@@ -204,7 +199,7 @@ while getopts 'hivp:' flag; do
     h) print_usage && exit 0 ;;
     i) print_info && exit 0 ;;
     v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit 0 ;;
-    p) if [[ $(command -v "$OPTARG" 2>&1) ]]; then PREVIEWER=$OPTARG; else echo "Unable to find previewer $OPTARG. Exiting..." && exit 1; fi ;;
+    p) [[ $(command -v "$OPTARG" 2>&1) ]] && PREVIEWER=$OPTARG || echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ;;
     *) print_usage && exit 1 ;;
     esac
 done
@@ -242,7 +237,7 @@ ${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
 ${LGREY}Category:${NC} ${q[0]}
 ___________________________________________________________
 
-$(if [ ${#QUESTION} -lt 59 ]; then printf "%$(((59 - ${#QUESTION}) / 2))s"; fi)$QUESTION"
+$([ ${#QUESTION} -lt 59 ] && printf "%$(((59 - ${#QUESTION}) / 2))s")$QUESTION"
 
 }
 
@@ -259,9 +254,7 @@ add_usage_entry() {
 # If no deck is selected in fzf menu
 # return user to start location
 # and exit quietly
-if [ -z "$DECK" ]; then
-    clear && cd "$PWD" && exit 1
-fi
+[ -z "$DECK" ] && clear && cd "$PWD" && exit 1
 
 main() {
     IFS=$':'
@@ -279,15 +272,13 @@ ${LGREY}──────────────── Press [Enter] to contin
     done
     clear
     print_head
-    if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
-        add_usage_entry && cd "$PWD" && clear && exit 0
-    fi
+    [ "$NEXT" = q ] || [ "$NEXT" = Q ] && add_usage_entry && cd "$PWD" && clear && exit 0
 
     ANSWER=$(echo "${q[2]}" | fold -w 59)
 
     echo -e "___________________________________________________________
 
-$(if [ ${#ANSWER} -lt 59 ]; then printf "%$(((59 - ${#ANSWER}) / 2))s"; fi)$ANSWER
+$([ ${#ANSWER} -lt 59 ] && printf "%$(((59 - ${#ANSWER}) / 2))s")$ANSWER
 
 ${WHITEBG}${WHITE}===========================================================${NC}
 
@@ -302,9 +293,8 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
         # shellcheck disable=SC2162
         read -sn 1 DIFFICULTY_SCORE
     done
-    if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then
+    { [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; } &&
         add_usage_entry && cd "$PWD" && clear && exit 0
-    fi
     clear
 
     COUNTER="$((COUNTER + 1))" # Increment count for card review count increment
@@ -344,15 +334,10 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
     ANSWER_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<<"${q[2]}")
     sed -i "s/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:${q[3]}/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:$NEW_ITEM_SCORE/g" "$DECK"
     # If no highscore currently set, set it.
-    if [ -z "$(cat "$HIGH_SCORE")" ]; then
-        echo "$COUNTER" >"$HIGH_SCORE"
-    fi
+    [ -z "$(cat "$HIGH_SCORE")" ] && echo "$COUNTER" >"$HIGH_SCORE"
 
     # If Cards Reviewed > Current High Score, Update
-    if [ "$COUNTER" -gt "$(cat "$HIGH_SCORE")" ]; then
-        echo "$COUNTER" >"$HIGH_SCORE"
-    fi
-
+    [ "$COUNTER" -gt "$(cat "$HIGH_SCORE")" ] && echo "$COUNTER" >"$HIGH_SCORE"
 }
 
 while true; do

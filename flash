@@ -199,7 +199,7 @@ while getopts 'hivp:' flag; do
     h) print_usage && exit 0 ;;
     i) print_info && exit 0 ;;
     v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit 0 ;;
-    p) [[ $(command -v "$OPTARG" 2>&1) ]] && PREVIEWER=$OPTARG || echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ;;
+    p) { [[ $(command -v "$OPTARG" 2>&1) ]] && PREVIEWER=$OPTARG; } || echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ;;
     *) print_usage && exit 1 ;;
     esac
 done
@@ -272,7 +272,7 @@ ${LGREY}──────────────── Press [Enter] to contin
     done
     clear
     print_head
-    [ "$NEXT" = q ] || [ "$NEXT" = Q ] && add_usage_entry && cd "$PWD" && clear && exit 0
+    { [ "$NEXT" = q ] || [ "$NEXT" = Q ]; } && add_usage_entry && cd "$PWD" && clear && exit 0
 
     ANSWER=$(echo "${q[2]}" | fold -w 59)
 

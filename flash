@@ -24,48 +24,48 @@
 #==============================================================#
 
 # USER CUSTOMIZABLE VARIABLES
-    CARD_POOL_SIZE=10 ######## How large the pool size is for shuf to draw from
-    SEARCH_DEPTH=999 ######### How many levels to recursively search for .csv's in .local/share/flash
-    PREVIEWER='bat' ########## What fzf previewer to use when searching through decks
-    CURR_DECK_DISPLAY="file" # Options are 'file' or 'path'
+CARD_POOL_SIZE=10        ######## How large the pool size is for shuf to draw from
+SEARCH_DEPTH=999         ######### How many levels to recursively search for .csv's in .local/share/flash
+PREVIEWER='bat'          ########## What fzf previewer to use when searching through decks
+CURR_DECK_DISPLAY="file" # Options are 'file' or 'path'
 
 # ANSI FOREGROUND ESCAPE COLORS
-    RED='\033[0;31m'
-    LRED='\033[1;31m'
-    YELLOW='\033[1;33m'
-    GREEN='\033[0;32m'
-    LGREEN='\033[1;32m'
-    LBLUE='\033[1;34m'
-    CYAN='\033[0;36m'
-    LCYAN='\033[1;36m'
-    ORANGE='\033[0;33m'
-    LGREY='\033[0;37m'
-    WHITE='\033[1;37m'
-    NC='\033[0m' # No Color
+RED='\033[0;31m'
+LRED='\033[1;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+LGREEN='\033[1;32m'
+LBLUE='\033[1;34m'
+CYAN='\033[0;36m'
+LCYAN='\033[1;36m'
+ORANGE='\033[0;33m'
+LGREY='\033[0;37m'
+WHITE='\033[1;37m'
+NC='\033[0m' # No Color
 
 # ANSI BACKGROUND ESCAPE COLORS
-    WHITEBG='\033[1;47m'
+WHITEBG='\033[1;47m'
 # FONT FORMAT EXCAPE CODES
-    BOLD='\e[1m'
+BOLD='\e[1m'
 
 # Remember User's Starting Directory
-    PWD="$(pwd)"
+PWD="$(pwd)"
 # Where Decks Are Located for linux & mac
 # Prefer XDG Configuration before hard coded file paths
-    OS="$(uname)"
-    case "$OS" in
-        "Darwin") DIR="${XDG_DATA_HOME:-$HOME/Library/Application Support}/flash" && alias shuf=gshuf ;;
-        "Linux") DIR="${XDG_DATA_HOME:-$HOME/.local/share}/flash" ;;
-        *) DIR="${XDG_DATA_HOME:-$HOME/.local/share}/flash" ;;
-    esac
+OS="$(uname)"
+case "$OS" in
+"Darwin") DIR="${XDG_DATA_HOME:-$HOME/Library/Application Support}/flash" && alias shuf=gshuf ;;
+"Linux") DIR="${XDG_DATA_HOME:-$HOME/.local/share}/flash" ;;
+*) DIR="${XDG_DATA_HOME:-$HOME/.local/share}/flash" ;;
+esac
 # Where the example deck will be placed and named
-    EXAMPLE_DECK="$DIR/deck.csv"
+EXAMPLE_DECK="$DIR/deck.csv"
 # Track High score
-    HIGH_SCORE="$DIR/.highscore"
+HIGH_SCORE="$DIR/.highscore"
 # Track number of cards reviewed per session
-    REVIEW_LOG="$DIR/.reviews"
+REVIEW_LOG="$DIR/.reviews"
 # Iterator for Count of cards reveiwed
-    COUNTER=0
+COUNTER=0
 # Success message of setup process
 DIR_MADE_MSG="
 Your ${LRED}$DIR${NC} directory has been made and
@@ -114,49 +114,45 @@ Science:What is the distance between the Earth and Sol called?:An Astronomical U
 Programming:What is the best operating system?:Arch, because BTW i run Arch:999"
 
 # Define setup process in a function and create necessary files for user
-setup(){\
-    mkdir "$DIR" && \
-    touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} && \
-    echo "$DECK_TEMPLATE" >> "$EXAMPLE_DECK" && \
-    echo -e "$DIR_MADE_MSG" ;}
+setup() {
+    mkdir "$DIR" &&
+        touch {"$EXAMPLE_DECK","$HIGH_SCORE","$REVIEW_LOG"} &&
+        echo "$DECK_TEMPLATE" >>"$EXAMPLE_DECK" &&
+        echo -e "$DIR_MADE_MSG"
+}
 
 # Test if .local/share exists and wether to offer setup process
-if [ ! -d "$DIR" ];then
+if [ ! -d "$DIR" ]; then
     echo -e "No ${LRED}$DIR${NC} directory, make it? ${LGREEN}Y${NC}/${LRED}N${NC}"
     # shellcheck disable=SC2162
     read RESPONSE
-        case "$RESPONSE" in
-            [QqNn]) exit 0 ;;
-            [Yy]) setup && exit 0 ;;
-            *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit 1 ;;
-        esac
+    case "$RESPONSE" in
+    [QqNn]) exit 0 ;;
+    [Yy]) setup && exit 0 ;;
+    *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit 1 ;;
+    esac
 fi
 
 # go to the flashcard decks directory
-    cd "$DIR" || exit 1
+cd "$DIR" || exit 1
 
 # If there are no flashcard decks available return user to starting location
 # while also displaying explanatory text of issue
-if [ "$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l)" = 0 ]; then
+[ "$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l)" = 0 ] &&
     echo -e "$NO_DECKS" && cd "$PWD" && exit 1
-fi
 
 # if highscore file was removed, remake it.
-if [ ! -e "$HIGH_SCORE" ]; then
-    touch "$HIGH_SCORE"
-fi
+[ ! -e "$HIGH_SCORE" ] && touch "$HIGH_SCORE"
 
 # if reviewed file was removed, remake it.
-if [ ! -e "$REVIEW_LOG" ]; then
-    touch "$REVIEW_LOG"
-fi
+[ ! -e "$REVIEW_LOG" ] && touch "$REVIEW_LOG"
 
 print_usage() {
     echo -e "\n${LCYAN}fla.sh --- Flash card system by Bryan Jenks${NC} ${LBLUE}<BryanJenks@protonmail.com>${NC}\n\n${YELLOW}${BOLD}Usage:${NC}\n\t${GREEN}flash -h:${NC} Print this help text\n\t${GREEN}flash -i:${NC} Print Information about the flashcard system\n\t${GREEN}flash -v:${NC} Print version Number\n\t${GREEN}flash -p [BINARY]:${NC} Change the previewer when selecting decks.\n\t\tDefault: ${GREEN}bat${NC}\n\t\tSupported: ${GREEN}bat${NC}, ${GREEN}cat${NC}\n"
 }
 
 print_info() {
-echo -e "\nThis flash card system works via colon ${YELLOW}:${NC} seperated ${YELLOW}.csv${NC} files\n
+    echo -e "\nThis flash card system works via colon ${YELLOW}:${NC} seperated ${YELLOW}.csv${NC} files\n
 with entries that look like this: ${LGREY}category:question:answer:0${NC}\n
 These ${YELLOW}.csv${NC} files should be stored in your
 
@@ -199,39 +195,38 @@ ${LCYAN}The Scoring System:${NC}\n
 }
 
 while getopts 'hivp:' flag; do
-  case "${flag}" in
+    case "${flag}" in
     h) print_usage && exit 0 ;;
     i) print_info && exit 0 ;;
     v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit 0 ;;
-    p) if [[ $(command -v "$OPTARG" 2>&1) ]]; then PREVIEWER=$OPTARG; else echo "Unable to find previewer $OPTARG. Exiting..." && exit 1; fi ;;
+    p) { [[ $(command -v "$OPTARG" 2>&1) ]] && PREVIEWER=$OPTARG; } || echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ;;
     *) print_usage && exit 1 ;;
-  esac
+    esac
 done
-
 
 # Set some parameters for preview command used by FZF
 while [ -z "$PREVIEWER_PARAMTERS" ]; do
-  case "$PREVIEWER" in
+    case "$PREVIEWER" in
     bat) PREVIEWER_PARAMTERS="--theme='Solarized (dark)' --style=numbers --color=always" ;;
     cat) PREVIEWER_PARAMTERS="--number" ;;
-    *)   echo -e "${RED}$PREVIEWER${NC} is not a valid previewer. Use '${GREEN}bat${NC}' or '${GREEN}cat${NC}'. Falling back on default...\n" && read -r -s -p 'Press [Enter] to continue...' && echo -e "\n" && PREVIEWER='bat' ;;
-  esac
+    *) echo -e "${RED}$PREVIEWER${NC} is not a valid previewer. Use '${GREEN}bat${NC}' or '${GREEN}cat${NC}'. Falling back on default...\n" && read -r -s -p 'Press [Enter] to continue...' && echo -e "\n" && PREVIEWER='bat' ;;
+    esac
 done
 
 # Show pretty FZF preview of decks using $PREVIEWER. Default: BAT
-    DECK="$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview="$PREVIEWER $PREVIEWER_PARAMTERS {} | head -500")"
+DECK="$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | fzf --preview="$PREVIEWER $PREVIEWER_PARAMTERS {} | head -500")"
 
 # Get current deck name for display
 case "$CURR_DECK_DISPLAY" in
-    file) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
-    path) CURRENT_DECK="$DECK" ;;
-    *) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
+file) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
+path) CURRENT_DECK="$DECK" ;;
+*) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
 esac
 
 # The top part of the flash display so that code is not duplicated twice
-print_head(){
+print_head() {
 
-QUESTION=$(echo "${q[1]}" | fold -w 59)
+    QUESTION=$(echo "${q[1]}" | fold -w 59)
 
     echo -e "${WHITEBG}          Fla.sh - Flash Cards In Your Terminal            ${NC}
 ${ORANGE}${BOLD}  Current Deck:${BOLD}${NC}\t$(basename -s .csv "$CURRENT_DECK")
@@ -242,31 +237,29 @@ ${ORANGE}${BOLD}Cards Reviewed:${BOLD}${NC}\t$COUNTER
 ${LGREY}Category:${NC} ${q[0]}
 ___________________________________________________________
 
-$(if [ ${#QUESTION} -lt 59 ]; then printf "%$(( ( 59 - ${#QUESTION} ) / 2 ))s"; fi)$QUESTION"
+$([ ${#QUESTION} -lt 59 ] && printf "%$(((59 - ${#QUESTION}) / 2))s")$QUESTION"
 
 }
 
 # Creating new entries in the log for the average score generation
-add_usage_entry(){
+add_usage_entry() {
     if [ ! "$COUNTER" = 0 ]; then
         # Create a New Entry
         TIME_STAMP=$(date +"%Y%m%d %H:%M:%S")
         printf -v ENTRY "TimeStamp: %s Deck: %s cardsReviewed: %s" "$TIME_STAMP" "$CURRENT_DECK" "$COUNTER"
-        echo "$ENTRY" >> "$REVIEW_LOG"
+        echo "$ENTRY" >>"$REVIEW_LOG"
     fi
 }
 
 # If no deck is selected in fzf menu
 # return user to start location
 # and exit quietly
-if [ -z "$DECK" ]; then
-    clear && cd "$PWD" && exit 1
-fi
+[ -z "$DECK" ] && clear && cd "$PWD" && exit 1
 
-main(){
+main() {
     IFS=$':'
     # shellcheck disable=SC2162
-    read -a q <<< "$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE"| shuf -n 1)"
+    read -a q <<<"$(sort "$DECK" -n --field-separator=: --key=4 | head -n "$CARD_POOL_SIZE" | shuf -n 1)"
     clear
     print_head
     echo -e "
@@ -279,15 +272,13 @@ ${LGREY}──────────────── Press [Enter] to contin
     done
     clear
     print_head
-    if [ "$NEXT" = q ] || [ "$NEXT" = Q ]; then
-        add_usage_entry && cd "$PWD" && clear && exit 0
-    fi
+    { [ "$NEXT" = q ] || [ "$NEXT" = Q ]; } && add_usage_entry && cd "$PWD" && clear && exit 0
 
-ANSWER=$(echo "${q[2]}" | fold -w 59)
+    ANSWER=$(echo "${q[2]}" | fold -w 59)
 
     echo -e "___________________________________________________________
 
-$(if [ ${#ANSWER} -lt 59 ]; then printf "%$(( ( 59 - ${#ANSWER} ) / 2 ))s"; fi)$ANSWER
+$([ ${#ANSWER} -lt 59 ] && printf "%$(((59 - ${#ANSWER}) / 2))s")$ANSWER
 
 ${WHITEBG}${WHITE}===========================================================${NC}
 
@@ -302,59 +293,53 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
         # shellcheck disable=SC2162
         read -sn 1 DIFFICULTY_SCORE
     done
-    if [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; then
+    { [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; } &&
         add_usage_entry && cd "$PWD" && clear && exit 0
-    fi
     clear
 
-    COUNTER="$((COUNTER+1))" # Increment count for card review count increment
+    COUNTER="$((COUNTER + 1))" # Increment count for card review count increment
 
     if [ "${q[3]}" = 0 ]; then
         NEW_ITEM_SCORE=0
         case "$DIFFICULTY_SCORE" in
-            [123]) NEW_ITEM_SCORE=0 ;;#HARD DIFFICULTY & NORMAL
-            4) NEW_ITEM_SCORE=1 ;;#MILD
-            5) NEW_ITEM_SCORE=2 ;;#EASY
-            *) NEW_ITEM_SCORE=0 ;;#INVALID
+        [123]) NEW_ITEM_SCORE=0 ;; #HARD DIFFICULTY & NORMAL
+        4) NEW_ITEM_SCORE=1 ;; #MILD
+        5) NEW_ITEM_SCORE=2 ;; #EASY
+        *) NEW_ITEM_SCORE=0 ;; #INVALID
         esac
 
     elif [ "${q[3]}" = 1 ]; then
         case "$DIFFICULTY_SCORE" in
-            1) NEW_ITEM_SCORE=0 ;;#HARD
-            2) NEW_ITEM_SCORE=0 ;;#DIFFICULT
-            3) NEW_ITEM_SCORE=1 ;;#NORMAL
-            4) NEW_ITEM_SCORE=2 ;;#MILD
-            5) NEW_ITEM_SCORE=3 ;;#EASY
-            *) NEW_ITEM_SCORE=1 ;;#INVALID
+        1) NEW_ITEM_SCORE=0 ;; #HARD
+        2) NEW_ITEM_SCORE=0 ;; #DIFFICULT
+        3) NEW_ITEM_SCORE=1 ;; #NORMAL
+        4) NEW_ITEM_SCORE=2 ;; #MILD
+        5) NEW_ITEM_SCORE=3 ;; #EASY
+        *) NEW_ITEM_SCORE=1 ;; #INVALID
         esac
     else
         case "$DIFFICULTY_SCORE" in
-            1) NEW_ITEM_SCORE="$((q[3]-2))" ;;#HARD
-            2) NEW_ITEM_SCORE="$((q[3]-1))" ;;#DIFFICULTY
-            3) NEW_ITEM_SCORE="${q[3]}" ;;#NORMAL
-            4) NEW_ITEM_SCORE="$((q[3]+1))" ;;#MILD
-            5) NEW_ITEM_SCORE="$((q[3]+2))" ;;#EASY
-            *) NEW_ITEM_SCORE="${q[3]}" ;;#INVALID
+        1) NEW_ITEM_SCORE="$((q[3] - 2))" ;; #HARD
+        2) NEW_ITEM_SCORE="$((q[3] - 1))" ;; #DIFFICULTY
+        3) NEW_ITEM_SCORE="${q[3]}" ;; #NORMAL
+        4) NEW_ITEM_SCORE="$((q[3] + 1))" ;; #MILD
+        5) NEW_ITEM_SCORE="$((q[3] + 2))" ;; #EASY
+        *) NEW_ITEM_SCORE="${q[3]}" ;; #INVALID
         esac
     fi
 
     # Update item score for each flashcard item
     ## Remove forward slashes in the Questions and answers
-    QUESTION_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<< "${q[1]}")
-    ANSWER_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<< "${q[2]}")
+    QUESTION_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<<"${q[1]}")
+    ANSWER_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<<"${q[2]}")
     sed -i "s/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:${q[3]}/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:$NEW_ITEM_SCORE/g" "$DECK"
     # If no highscore currently set, set it.
-    if [ -z "$(cat "$HIGH_SCORE")" ]; then
-        echo "$COUNTER" > "$HIGH_SCORE"
-    fi
+    [ -z "$(cat "$HIGH_SCORE")" ] && echo "$COUNTER" >"$HIGH_SCORE"
 
     # If Cards Reviewed > Current High Score, Update
-    if [ "$COUNTER" -gt "$(cat "$HIGH_SCORE")" ]; then
-        echo "$COUNTER" > "$HIGH_SCORE"
-    fi
-
+    [ "$COUNTER" -gt "$(cat "$HIGH_SCORE")" ] && echo "$COUNTER" >"$HIGH_SCORE"
 }
 
 while true; do
-        main
+    main
 done

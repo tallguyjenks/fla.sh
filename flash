@@ -198,7 +198,7 @@ while getopts 'hivp:' flag; do
     case "${flag}" in
     h) print_usage && exit 0 ;;
     i) print_info && exit 0 ;;
-    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit 0 ;;
+    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.2${NC}\n" && exit 0 ;;
     p) { [[ $(command -v "$OPTARG" 2>&1) ]] && PREVIEWER=$OPTARG; } || echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ;;
     *) print_usage && exit 1 ;;
     esac

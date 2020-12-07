@@ -208,7 +208,7 @@ done
 while [ -z "$PREVIEWER_PARAMTERS" ]; do
     case "$PREVIEWER" in
     bat) PREVIEWER_PARAMTERS="--theme='Solarized (dark)' --style=numbers --color=always" ;;
-    cat) PREVIEWER_PARAMTERS="--number" ;;
+    cat) PREVIEWER_PARAMTERS="-b" ;;
     *) echo -e "${RED}$PREVIEWER${NC} is not a valid previewer. Use '${GREEN}bat${NC}' or '${GREEN}cat${NC}'. Falling back on default...\n" && read -r -s -p 'Press [Enter] to continue...' && echo -e "\n" && PREVIEWER='bat' ;;
     esac
 done

@@ -198,7 +198,7 @@ while getopts 'hivp:' flag; do
     case "${flag}" in
     h) print_usage && exit 0 ;;
     i) print_info && exit 0 ;;
-    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.1${NC}\n" && exit 0 ;;
+    v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.2${NC}\n" && exit 0 ;;
     p) { [[ $(command -v "$OPTARG" 2>&1) ]] && PREVIEWER=$OPTARG; } || echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ;;
     *) print_usage && exit 1 ;;
     esac
@@ -330,16 +330,11 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
 
     # Update item score for each flashcard item
     ## Remove forward slashes in the Questions and answers
-<<<<<<< Updated upstream
-    QUESTION_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<<"${q[1]}")
-    ANSWER_REGEX=$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<<"${q[2]}")
-=======
+
     QUESTION_REGEX="$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<<"${q[1]}")"
     ANSWER_REGEX="$(sed "s/\(\/\|\[\|\]\|\*\)/\\\\\1/g" <<<"${q[2]}")"
-    # sed -i "s/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:${q[3]}/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:$NEW_ITEM_SCORE/g" "$DECK"
->>>>>>> Stashed changes
-    sed -i .bak "s/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:${q[3]}/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:$NEW_ITEM_SCORE/g" "$DECK"
-    rm ./*.bak
+    sed -i .bak "s/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:${q[3]}/${q[0]}:$QUESTION_REGEX:$ANSWER_REGEX:$NEW_ITEM_SCORE/g" "$DECK" && rm ./*.bak
+    
     # If no highscore currently set, set it.
     [ -z "$(cat "$HIGH_SCORE")" ] && echo "$COUNTER" >"$HIGH_SCORE"
 

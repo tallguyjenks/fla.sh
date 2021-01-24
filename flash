@@ -129,7 +129,7 @@ if [ ! -d "$DIR" ]; then
     case "$RESPONSE" in
     [QqNn]) exit 0 ;;
     [Yy]) setup && exit 0 ;;
-    *) echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit 1 ;;
+    *) >&2 echo -e "invalid choice, please select either ${LGREEN}y${NC} or ${LRED}n${NC}" && exit 1 ;;
     esac
 fi
 
@@ -139,7 +139,7 @@ cd "$DIR" || exit 1
 # If there are no flashcard decks available return user to starting location
 # while also displaying explanatory text of issue
 [ "$(find . -maxdepth "$SEARCH_DEPTH" -iname "*.csv" | wc -l)" = 0 ] &&
-    echo -e "$NO_DECKS" && cd "$PWD" && exit 1
+    >&2 echo -e "$NO_DECKS" && exit 1
 
 # if highscore file was removed, remake it.
 [ ! -e "$HIGH_SCORE" ] && touch "$HIGH_SCORE"
@@ -199,7 +199,7 @@ while getopts 'hivp:' flag; do
     h) print_usage && exit 0 ;;
     i) print_info && exit 0 ;;
     v) echo -e "\n${YELLOW}fla.sh Current Version:${NC} ${RED}1.2${NC}\n" && exit 0 ;;
-    p) { [[ $(command -v "$OPTARG" 2>&1) ]] && PREVIEWER=$OPTARG; } || echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ;;
+    p) { [[ $(command -v "$OPTARG" 2>&1) ]] && PREVIEWER=$OPTARG; } || >&2 echo "Unable to find previewer $OPTARG. Exiting..." && exit 1 ;;
     *) print_usage && exit 1 ;;
     esac
 done
@@ -254,7 +254,7 @@ add_usage_entry() {
 # If no deck is selected in fzf menu
 # return user to start location
 # and exit quietly
-[ -z "$DECK" ] && clear && cd "$PWD" && exit 1
+[ -z "$DECK" ] && clear && exit 1
 
 main() {
     IFS=$':'
@@ -272,7 +272,7 @@ ${LGREY}──────────────── Press [Enter] to contin
     done
     clear
     print_head
-    { [ "$NEXT" = q ] || [ "$NEXT" = Q ]; } && add_usage_entry && cd "$PWD" && clear && exit 0
+    { [ "$NEXT" = q ] || [ "$NEXT" = Q ]; } && add_usage_entry && clear && exit 0
 
     ANSWER=$(echo "${q[2]}" | fold -w 59)
 
@@ -294,7 +294,7 @@ ${LGREY}Select a number to continue, or${NC} ${LRED}Q${NC} ${LGREY}to quit...${N
         read -sn 1 DIFFICULTY_SCORE
     done
     { [ "$DIFFICULTY_SCORE" = q ] || [ "$DIFFICULTY_SCORE" = Q ]; } &&
-        add_usage_entry && cd "$PWD" && clear && exit 0
+        add_usage_entry && clear && exit 0
     clear
 
     COUNTER="$((COUNTER + 1))" # Increment count for card review count increment

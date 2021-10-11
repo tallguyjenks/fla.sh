@@ -77,7 +77,7 @@ Organized like this:
 
 **Fourth Field:** _The Score*_
 
-> \* The score determines how often and which cards are shown to you. A good idea is to start all your cards out at 0 so that all are served to you equally. As you study, review and mark the more familiar cards as 'Mild' or 'Easy', more points will be added. The lower point cards are sorted to the top and the top 10 are taken, shuffled and then drawn from. This way as you learn the material and the items you are less familiar with bubble up into the shuffled pool for drawing and those that go up in points due to increased familiarity go down because you're rating the material as easier.
+> \* The score determines how often and which cards are shown to you. A good idea is to start all your cards out at 0 so that all are served to you equally. As you study, review, and mark the more familiar cards as 'Mild' or 'Easy', more points will be added. The lower point cards are sorted to the top and the top 10 are taken, shuffled, and then drawn from. This way as you learn the material and the items you are less familiar with bubble up into the shuffled pool for drawing and those that go up in points due to increased familiarity go down because you're rating the material as easier.
 
 ### Decks
 

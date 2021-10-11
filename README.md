@@ -53,7 +53,7 @@ To utilize this script copy/move it to your `~/.local/bin/` folder or any place 
 
 ## Troubleshooting
 
->Common issues will be added here as they arise during the stability stage of this script.
+> Common issues will be added here as they arise during the stability stage of this script.
 
 Checks:
 

@@ -13,7 +13,8 @@
 
 <!-- Description -->
 > Flashcards in your terminal! 
->This script was inspired by a basic script that I had seen in a youtube video by a user named nixcasts. I like the Anki flashcard system, hence I'm working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
+>
+> This script was inspired by a basic script that I had seen in a youtube video by a user named nixcasts. I like the Anki flashcard system, hence I'm working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
 
 ![Preview of fla.sh](./img/flash_preview.png)
 

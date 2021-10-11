@@ -12,7 +12,9 @@
 </p>
 
 <!-- Description -->
-> flashcards in your terminal! This script was inspired by a basic script i saw in a youtube video by a user named nixcasts. I Like the Anki flashcard system and so im working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
+> Flashcards in your terminal! 
+>
+> This script was inspired by a basic script that I had seen in a youtube video by a user named nixcasts. I like the Anki flashcard system, hence I'm working to replicate it in a simple manner using plain text documents and a shell script to aid my ability to study with active recall and spaced repetition.
 
 ![Preview of fla.sh](./img/flash_preview.png)
 
@@ -42,7 +44,7 @@ Untested, not sure if this script and its dependencies will work with WSL or not
 
 Will need to have `brew` to install dependencies listed below and also `brew install coreutils` to get the GNU core utilities as `shuf` is not in macOS by default.
 
-You will need to put the script itself somewhere in your `$PATH` and execute it to initialize setup.
+You will need to put the script itself somewhere in your `$PATH` and execute it to initialize the setup.
 
 Confirmed to work on macOS 10.14.6 more recent version welcome to test and file an issue/pull request to update README if other versions run the script as it should.
 
@@ -76,11 +78,11 @@ Organized like this:
 
 **Fourth Field:** _The Score*_
 
-> \* The score determines how often which cards are shown to you. A good idea is to start all your cards out at 0 so they are all served to you equally. As you study and review and mark the more familiar cards as 'Mild' or 'Easy' more points will be added. The lower point cards are sorted to the top and the top 10 are taken and shuffled and then drawn from. This way as you learn the material the items you are less familiar with bubble up into the shuffled pool for drawing and those that go up in points due to increased familiarity go down because you're rating the material as easier.
+> \* The score determines how often and which cards are shown to you. A good idea is to start all your cards out at 0 so that all are served to you equally. As you study, review, and mark the more familiar cards as 'Mild' or 'Easy', more points will be added. The lower point cards are sorted to the top and the top 10 are taken, shuffled, and then drawn from. This way as you learn the material and the items you are less familiar with bubble up into the shuffled pool for drawing and those that go up in points due to increased familiarity go down because you're rating the material as easier.
 
 ### Decks
 
-If you would like to browse a collection of decks readily available in your subject matter that are comaptible with [fla.sh](https://github.com/tallguyjenks/fla.sh) then you should check out [Flash Decks](https://github.com/tallguyjenks/Flash-Decks).
+If you would like to browse through a collection of decks readily available in your subject matter that are comaptible with [fla.sh](https://github.com/tallguyjenks/fla.sh) then you should check out [Flash Decks](https://github.com/tallguyjenks/Flash-Decks).
 
 ## Media (accepting contributions)
 

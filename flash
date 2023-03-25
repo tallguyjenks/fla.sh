@@ -24,10 +24,10 @@
 #==============================================================#
 
 # USER CUSTOMIZABLE VARIABLES
-CARD_POOL_SIZE=10        ######## How large the pool size is for shuf to draw from
 SEARCH_DEPTH=999         ######### How many levels to recursively search for .csv's in .local/share/flash
 PREVIEWER='bat'          ########## What fzf previewer to use when searching through decks
 CURR_DECK_DISPLAY="file" # Options are 'file' or 'path'
+ ######## How large the pool size is for shuf to draw from
 
 # ANSI FOREGROUND ESCAPE COLORS
 RED='\033[0;31m'
@@ -222,6 +222,7 @@ file) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
 path) CURRENT_DECK="$DECK" ;;
 *) CURRENT_DECK="$(echo "$DECK" | awk -F/ '{print $NF}')" ;;
 esac
+CARD_POOL_SIZE=$(wc -l $CURRENT_DECK | cut -c 1-2)
 
 # The top part of the flash display so that code is not duplicated twice
 print_head() {

@@ -121,7 +121,7 @@ setup() {
         echo -e "$DIR_MADE_MSG"
 }
 
-# Test if .local/share exists and wether to offer setup process
+# Test if .local/share exists and whether to offer setup process
 if [ ! -d "$DIR" ]; then
     echo -e "No ${LRED}$DIR${NC} directory, make it? ${LGREEN}Y${NC}/${LRED}N${NC}"
     # shellcheck disable=SC2162

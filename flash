@@ -152,7 +152,7 @@ print_usage() {
 }
 
 print_info() {
-    echo -e "\nThis flash card system works via colon ${YELLOW}:${NC} seperated ${YELLOW}.csv${NC} files\n
+    echo -e "\nThis flash card system works via colon ${YELLOW}:${NC} separated ${YELLOW}.csv${NC} files\n
 with entries that look like this: ${LGREY}category:question:answer:0${NC}\n
 These ${YELLOW}.csv${NC} files should be stored in your
 
